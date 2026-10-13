@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#4F46E5">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Dayloom — kundalik rejalar, odatlar, fokus va yutuqlaringiz uchun shaxsiy makon. Offline ishlaydigan professional daily tracker.">
+<meta name="referrer" content="no-referrer">
+<title>Dayloom · Daily Tracker</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XC0tR5eYHhy+ve4m9aWfWkxN+Hpn0z8DkP9dFQGyz9I='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<style>/* 01 · Wordloom design language: quiet surfaces, expressive gradients. */
+:root{--bg:#F4F5FA;--surface:#fff;--text:#1A1C2C;--muted:#6B7080;--line:#E3E5EE;--primary:#4F46E5;--soft:#EFEDFF;--green:#15803D;--green-bg:#DCFCE7;--amber:#C2410C;--amber-bg:#FFEDD5;--red:#B91C1C;--red-bg:#FEE2E2;--shadow:0 3px 8px #20234c03,0 16px 35px #20234c05;--heading:Manrope,Inter,system-ui,sans-serif;--body:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141521;--surface:#1E2030;--text:#F3F3FA;--muted:#B0B3C7;--line:#37394D;--primary:#A9A3FF;--soft:#302A50;--green:#86EFAC;--green-bg:#193B2A;--amber:#FDBA74;--amber-bg:#422A1D;--red:#FCA5A5;--red-bg:#46212B;--shadow:0 8px 25px #0002}
+}
+
+:root[data-theme="dark"]{--bg:#141521;--surface:#1E2030;--text:#F3F3FA;--muted:#B0B3C7;--line:#37394D;--primary:#A9A3FF;--soft:#302A50;--green:#86EFAC;--green-bg:#193B2A;--amber:#FDBA74;--amber-bg:#422A1D;--red:#FCA5A5;--red-bg:#46212B;--shadow:0 8px 25px #0002}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer;color:inherit;border:0;touch-action:manipulation}
+button:disabled{opacity:.5;cursor:not-allowed}
+button,a,input,select,textarea,[tabindex]{outline-offset:4px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--primary)}
+button{transition:background .18s,transform .18s,box-shadow .18s}
+button:active:not(:disabled){transform:translateY(1px)}
+a{color:var(--primary)}
+h1,h2,h3,h4,p{margin:0}
+h1,h2,h3,h4{font-family:var(--heading);font-weight:800;letter-spacing:-.035em}
+h1{font-size:clamp(28px,3vw,38px);line-height:1.25}
+h2{font-size:23px;line-height:1.35}
+h3{font-size:17px}
+h4{font-size:14px}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.tiny{font-size:11px}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.hidden,[hidden]{display:none!important}
+.row{display:flex;align-items:center;gap:12px}
+.wrap{flex-wrap:wrap}
+.between{justify-content:space-between}
+.stack{display:grid;gap:18px}
+.grow{flex:1;min-width:0}
+.icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex-shrink:0}
+.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 17px;border:1px solid var(--line);background:var(--surface);border-radius:12px;font-size:12px;font-weight:750;text-decoration:none}
+.btn:hover:not(:disabled){background:var(--bg)}
+.btn.primary{background:linear-gradient(115deg,#4F46E5,#7C3AED);border-color:transparent;color:#fff;box-shadow:0 5px 15px #4f46e520}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.soft{background:var(--soft);border-color:transparent;color:var(--primary)}
+.btn.danger{color:var(--red);background:var(--red-bg);border-color:transparent}
+.btn.square{width:44px;padding:10px;flex-shrink:0}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:99px;background:var(--bg);color:var(--muted);padding:5px 10px;font-size:10px;font-weight:700;line-height:1.5}
+.pill.purple{color:var(--primary);background:var(--soft)}
+.pill.green{color:var(--green);background:var(--green-bg)}
+.pill.amber{color:var(--amber);background:var(--amber-bg)}
+.pill.red{color:var(--red);background:var(--red-bg)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;flex-shrink:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);min-width:0}
+.pad{padding:24px}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:17px}
+.card-head p{color:var(--muted);font-size:11px;margin-top:4px}
+.kbd{font:10px var(--body);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:2px 6px;color:var(--muted);background:var(--surface)}
+.skip{position:fixed;top:-80px;left:20px;z-index:100;padding:12px;background:var(--surface)}
+.skip:focus{top:10px}
+.divider{height:1px;background:var(--line);margin:22px 0}
+.empty{padding:30px 20px;text-align:center}
+.empty-icon{font-size:29px;margin-bottom:12px}
+.empty h3{font-size:16px}
+.empty p{font-size:12px;color:var(--muted);max-width:360px;margin:8px auto 17px}
+.notice{background:var(--amber-bg);color:var(--amber);border-radius:14px;padding:13px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:12px;margin-bottom:18px}
+.notice .btn{flex-shrink:0}
+
+/* 02 · Persistent sidebar and responsive mobile navigation. */
+.sidebar{position:fixed;inset:0 auto 0 0;width:226px;background:var(--surface);border-right:1px solid var(--line);padding:31px 19px 23px;display:flex;flex-direction:column;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;padding:0 10px;font:800 25px var(--heading);letter-spacing:-1.3px}
+.brand-mark{width:40px;height:43px;display:grid;place-items:center;background:linear-gradient(135deg,#4F46E5,#8B51EC);color:#fff;border-radius:14px;box-shadow:0 5px 15px #4f46e522}
+.brand-mark .icon{width:26px;height:26px}
+.brand small{color:var(--primary)}
+.brand-caption{font-size:9px;letter-spacing:.17em;color:var(--muted);margin:10px 0 30px 61px}
+.nav-label-small{font-size:9px;letter-spacing:.12em;color:var(--muted);margin:0 13px 11px}
+.navigation{display:grid;gap:7px}
+.nav-item{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 15px;min-height:47px;width:100%;background:transparent;border-radius:12px;color:var(--muted);font-size:12px;font-weight:650}
+.nav-item:hover{background:var(--bg)}
+.nav-item.active{background:var(--soft);color:var(--primary)}
+.nav-count{margin-left:auto;font-size:10px;background:var(--surface);padding:2px 7px;border-radius:6px}
+.sidebar-bottom{margin-top:auto;display:grid;gap:14px;padding-top:25px}
+.side-goal{border-radius:16px;background:var(--bg);padding:17px}
+.side-goal p{font-size:10px;color:var(--muted);margin-top:7px}
+.side-goal strong{font:800 12px var(--heading)}
+.progress-track{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.progress-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4F46E5,#986AF0);transition:width .35s ease}
+.side-goal .progress-track{margin-top:13px}
+.saved-line{font-size:10px;display:flex;gap:7px;align-items:center;color:var(--muted);padding:0 12px}
+.saved-line .dot{color:var(--green)}
+.workspace{margin-left:226px;padding:23px clamp(22px,3.8vw,58px) 42px;max-width:1680px}
+.utility{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:29px}
+.utility-path{font-size:11px;color:var(--muted)}
+.mobile-brand{display:none}
+.utility-actions{display:flex;align-items:center;gap:5px}
+.utility-search{display:flex;align-items:center;gap:9px;padding:0 13px;height:44px;min-width:190px;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:11px}
+.utility-search .kbd{margin-left:auto}
+.avatar{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#FCE9D5;color:#86502C;font-size:11px;font-weight:800;margin-left:5px}
+.page-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:25px}
+.page-heading p{font-size:12px;color:var(--muted);margin-top:9px}
+.page-heading .eyebrow{margin-bottom:8px}
+.date-button{font-size:11px;color:var(--muted)}
+.page-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.footer{text-align:center;font-size:10px;color:var(--muted);margin-top:28px}
+.footer .icon{width:13px;height:13px}
+
+/* 03 · Today: a useful, calm home base. */
+.welcome{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:30px 33px;border-radius:23px;background:linear-gradient(115deg,#5146D9,#7852D9 80%,#8857DC);color:#fff;margin-bottom:22px;min-height:190px;box-shadow:0 10px 25px #4f46e510}
+.welcome:before,.welcome:after{content:"";position:absolute;border:1px solid #ffffff16;width:260px;height:260px;border-radius:50%;right:-60px;top:-150px;pointer-events:none}
+.welcome:after{width:350px;height:350px;top:-190px;right:-105px}
+.welcome-copy{position:relative;z-index:1;max-width:550px}
+.welcome .eyebrow{color:#EEE9FF;font-size:9px;margin-bottom:10px}
+.welcome h2{font-size:clamp(22px,2.7vw,29px);letter-spacing:-.04em;max-width:510px;line-height:1.35}
+.welcome p{font-size:11px;color:#EEE9FF;max-width:430px;margin:10px 0 17px}
+.welcome .btn{background:#fff;color:#5143AB;border-color:transparent;font-size:11px;min-height:44px}
+.welcome-actions{display:flex;gap:9px;align-items:center}
+.welcome .btn.outline{background:#ffffff13;color:#fff;border-color:#ffffff55}
+.hero-orbit{width:133px;height:133px;flex:0 0 133px;position:relative;display:grid;place-items:center;background:conic-gradient(#D9D0FF var(--angle),#ffffff26 0);border-radius:50%;margin-right:17px}
+.hero-orbit:before{content:"";position:absolute;inset:8px;border-radius:50%;background:#6D4DCF}
+.hero-orbit div{position:relative;text-align:center;font-family:var(--heading);font-size:31px;font-weight:800;line-height:1.2}
+.hero-orbit span{font-size:9px;font-family:var(--body);display:block;font-weight:500;color:#F0EBFF;margin-top:6px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:23px}
+.metric{padding:19px 20px;border-radius:18px;box-shadow:none}
+.metric-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:10px;color:var(--muted)}
+.metric-icon{height:31px;width:31px;display:grid;place-items:center;border-radius:10px;background:var(--soft);color:var(--primary)}
+.metric-icon .icon{width:17px;height:17px}
+.metric-number{font:800 27px var(--heading);letter-spacing:-.05em;margin:9px 0 3px}
+.metric-number small{font:500 12px var(--body);color:var(--muted);letter-spacing:0}
+.metric-caption{font-size:10px;color:var(--muted)}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:22px;align-items:start}
+.dashboard-grid>.stack{gap:22px}
+.segment{display:flex;gap:4px;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--bg);width:max-content;max-width:100%}
+.segment button{min-height:36px;padding:8px 12px;background:transparent;border-radius:7px;color:var(--muted);font-size:10px;font-weight:700}
+.segment button.active{color:var(--primary);background:var(--surface);box-shadow:0 2px 5px #00000007}
+.quick-form{display:flex;gap:8px;margin:17px 0 0}
+.quick-form input{font-size:12px;min-width:0}
+.quick-form .btn{padding:10px;width:44px;flex-shrink:0}
+.plan-list{display:grid;gap:0}
+.task-row{display:flex;align-items:flex-start;gap:11px;padding:16px 0;border-bottom:1px solid var(--line)}
+.task-row:last-child{border-bottom:0}
+.task-check{margin-top:0;width:44px;height:44px;flex-shrink:0;background:transparent;display:grid;place-items:center;border-radius:10px}
+.check-box{width:22px;height:22px;border:1.5px solid #AEB3C4;border-radius:7px;display:grid;place-items:center;background:var(--surface);color:#fff;font-size:12px}
+.task-check:hover .check-box{border-color:var(--primary)}
+.task-row.done .check-box{background:linear-gradient(125deg,#4F46E5,#7C3AED);border-color:transparent}
+.task-body{min-width:0;flex:1;padding-top:3px}
+.task-title{font-size:12px;font-weight:700;overflow-wrap:anywhere;background:none;text-align:left;padding:0;line-height:1.7;min-height:24px}
+.task-row.done .task-title{text-decoration:line-through;color:var(--muted)}
+.task-meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;font-size:9px;color:var(--muted);margin-top:5px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:650;border-radius:6px;padding:2px 6px;background:var(--bg);color:var(--muted);max-width:100%;overflow-wrap:anywhere}
+.tag .dot{width:5px;height:5px}
+.priority-high{color:var(--red)}
+.priority-medium{color:var(--amber)}
+.priority-low{color:var(--muted)}
+.task-row>.btn{padding:10px;color:var(--muted)}
+.task-description{font-size:11px;color:var(--muted);margin-top:7px;overflow-wrap:anywhere}
+.text-link{padding:10px 0;min-height:44px;background:none;font-size:11px;font-weight:700;color:var(--primary)}
+.list-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:11px;margin-top:4px;font-size:10px;color:var(--muted)}
+
+.habit-mini{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.habit-mini:last-child{border-bottom:0}
+.habit-symbol{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;flex-shrink:0;background:var(--soft);font-size:19px}
+.habit-mini h4{font:700 12px var(--body);letter-spacing:0;overflow-wrap:anywhere}
+.habit-mini p{font-size:10px;color:var(--muted);margin-top:2px}
+.habit-add{width:44px;height:44px;background:var(--soft);color:var(--primary);border-radius:13px;font-size:22px}
+.habit-add.complete{background:var(--green-bg);color:var(--green);font-size:16px}
+.week-dots{display:flex;gap:5px;margin-top:11px}
+.week-dot{width:22px;height:22px;display:grid;place-items:center;border-radius:7px;background:var(--bg);color:var(--muted);font-size:8px}
+.week-dot.done{background:var(--soft);color:var(--primary)}
+.week-dot.current{outline:1px solid var(--primary);outline-offset:1px}
+.suggestion{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);padding:11px 14px;border-radius:12px;text-align:left;width:100%;min-height:48px;font-size:12px;font-weight:600;margin-top:9px}
+.suggestion .icon{margin-left:auto;color:var(--primary);width:16px}
+.mood-row{display:flex;justify-content:space-between;gap:7px;margin:16px 0}
+.mood-btn{min-width:44px;min-height:54px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:1.5px solid var(--line);background:var(--surface);border-radius:12px;font-size:21px}
+.mood-btn span{font-size:8px;color:var(--muted)}
+.mood-btn.active{background:var(--soft);border-color:var(--primary)}
+.journal-label{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:650;margin-bottom:8px}
+.journal-text{min-height:86px;font-size:12px!important}
+.focus-mini{background:linear-gradient(130deg,#EAE5FF,#F1EDFF);color:#4D397F;padding:24px;border-radius:20px;border:1px solid #E2DAF6;position:relative;overflow:hidden}
+.focus-mini .eyebrow{color:#6A558A;font-size:9px}
+.focus-mini h3{font-size:17px;margin:7px 0}
+.focus-mini p{font-size:11px;max-width:250px}
+.focus-mini .mini-clock{font:800 31px var(--heading);letter-spacing:-.04em;margin:18px 0}
+.focus-mini .btn{font-size:11px}
+.recent-entry{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}
+.recent-entry:last-child{border:0}
+.entry-dot{height:32px;width:32px;display:grid;place-items:center;border-radius:10px;background:var(--bg);color:var(--primary);flex-shrink:0}
+.entry-dot .icon{width:15px;height:15px}
+.recent-entry h4{font:700 12px var(--body);letter-spacing:0}
+.recent-entry p{font-size:10px;color:var(--muted);margin-top:3px}
+.recent-entry time{font-size:10px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.week-summary{display:flex;align-items:flex-end;gap:11px;height:115px;padding-top:10px}
+.mini-col{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;flex:1;font-size:9px;color:var(--muted)}
+.mini-bar{width:100%;max-width:35px;min-height:3px;background:linear-gradient(#A893F4,#6550D6);border-radius:6px}
+.mini-col.today .mini-bar{background:linear-gradient(#6B5CEC,#4F46E5)}
+
+/* 04 · Planner, calendars, habit cards and history. */
+.filterbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.filterbar .search-field{flex:1;min-width:180px}
+.filterbar select{width:auto;max-width:200px;font-size:11px}
+.search-field{position:relative}
+.search-field .icon{position:absolute;left:13px;top:13px;width:18px;height:18px;color:var(--muted)}
+.search-field input{padding-left:40px}
+.period-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.period-bar h3{font-size:17px}
+.date-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:9px;margin-bottom:21px}
+.date-tile{padding:13px 8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-height:83px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.date-tile span{color:var(--muted);font-size:10px}
+.date-tile strong{font-family:var(--heading);font-size:19px}
+.date-tile.active{background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;border-color:transparent;box-shadow:0 5px 14px #4f46e51a}
+.date-tile.active span{color:#ECE8FF}
+.date-tile .date-dot{height:4px;width:4px;background:var(--primary);border-radius:50%}
+.date-tile.active .date-dot{background:#fff}
+.planner-day{margin-bottom:17px}
+.planner-day-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.planner-day-body{padding:0 17px}
+.planner-day .empty{padding:22px}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.calendar-label{font-size:10px;color:var(--muted);padding:7px;text-align:center}
+.calendar-day{min-height:105px;border-radius:13px;padding:11px;background:var(--surface);border:1px solid var(--line);text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.calendar-day:hover{background:var(--bg)}
+.calendar-day.today{border-color:var(--primary);background:var(--soft)}
+.calendar-day.dim{opacity:.45}
+.calendar-day strong{font-size:12px}
+.calendar-day .cal-task{font-size:9px;border-radius:5px;background:var(--soft);color:var(--primary);padding:2px 5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.calendar-day .cal-count{font-size:9px;color:var(--muted);margin-top:auto}
+.habit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.habit-card{padding:23px}
+.habit-card h3{font-size:16px;margin-top:15px;overflow-wrap:anywhere}
+.habit-card .habit-quantity{font:800 30px var(--heading);letter-spacing:-.04em;margin-top:17px}
+.habit-card .habit-quantity small{font:500 11px var(--body);color:var(--muted);letter-spacing:0}
+.habit-card .progress-track{margin:10px 0 18px}
+.habit-card .week-dots{justify-content:space-between;margin-top:18px}
+.habit-card .week-dot{width:27px;height:29px;font-size:9px}
+.habit-card .habit-actions{display:flex;gap:8px}
+.habit-actions .btn{flex:1}
+.habit-actions .btn.square{flex:0 0 44px}
+.heatmap-scroll{overflow-x:auto;scrollbar-width:thin;padding:5px 3px 10px}
+.heatmap-shell{min-width:820px;position:relative;padding-left:25px;padding-top:25px}
+.heatmap{display:grid;grid-template-rows:repeat(7,13px);grid-auto-flow:column;grid-auto-columns:13px;gap:3px;width:max-content}
+.heat-cell{width:13px;height:13px;background:var(--line);border-radius:3px;padding:0;border:0}
+.heat-cell.l1{background:#C8BDFC}
+.heat-cell.l2{background:#A38CF0}
+.heat-cell.l3{background:#7B5FDE}
+.heat-cell.l4{background:#4F46E5}
+.heat-cell.outside{visibility:hidden}
+.heat-cell.current{outline:1.5px solid var(--primary);outline-offset:1px}
+.heat-cell:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+.heat-label{position:absolute;font-size:8px;color:var(--muted);top:0}
+.heat-weekday{position:absolute;left:0;top:23px;display:grid;grid-template-rows:repeat(7,16px);font-size:8px;color:var(--muted)}
+.heat-legend{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted);justify-content:flex-end;margin-top:12px}
+.heat-legend i{width:11px;height:11px;border-radius:3px}
+.history-filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin:21px 0}
+.history-group{margin-bottom:16px}
+.history-date{display:flex;align-items:center;gap:10px;margin:22px 0 10px;font-size:11px;font-weight:700}
+.history-date:after{content:"";height:1px;flex:1;background:var(--line)}
+.entry-row{padding:18px 21px;display:flex;gap:14px;border-bottom:1px solid var(--line)}
+.entry-row:last-child{border-bottom:0}
+.entry-row .entry-time{font-size:10px;color:var(--muted);padding-top:4px;min-width:38px}
+.entry-row h3{font:700 13px var(--body);letter-spacing:0;overflow-wrap:anywhere}
+.entry-row p{font-size:12px;color:var(--muted);margin:6px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.entry-row .row-actions{display:flex;align-items:flex-start;gap:0}
+.entry-row .row-actions .btn{color:var(--muted)}
+.pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px;color:var(--muted);font-size:11px}
+
+/* 05 · Focus and analytics. */
+.focus-layout{display:grid;grid-template-columns:1.35fr 1fr;gap:23px;align-items:start}
+.focus-room{padding:32px;text-align:center}
+.focus-room .segment{margin:0 auto 26px}
+.timer-dial{height:258px;width:258px;max-width:100%;border-radius:50%;margin:10px auto 25px;position:relative;display:grid;place-items:center;background:conic-gradient(#7960DE var(--angle),var(--line) 0)}
+.timer-dial:before{content:"";position:absolute;inset:9px;background:var(--surface);border-radius:50%}
+.timer-center{position:relative}
+.timer-clock{font:800 clamp(44px,5vw,58px)/1.2 var(--heading);font-variant-numeric:tabular-nums;letter-spacing:-.065em}
+.timer-caption{font-size:11px;color:var(--muted);margin-top:8px}
+.timer-actions{display:flex;justify-content:center;gap:11px;margin:20px 0}
+.timer-actions .btn.primary{min-width:142px}
+.focus-task{max-width:360px;margin:25px auto 0;text-align:left}
+.focus-task label{font-size:11px;font-weight:650;display:block;margin-bottom:7px}
+.session-row{display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}
+.session-row:last-child{border:0}
+.session-row strong{font-size:12px}
+.session-row p{font-size:10px;color:var(--muted)}
+.session-min{font:800 15px var(--heading);margin-left:auto;white-space:nowrap;color:var(--primary)}
+.breathing-note{background:linear-gradient(130deg,#E2F4EB,#DFF4EF);color:#265F4F;padding:24px;border-radius:20px}
+.breathing-note h3{font-size:17px;margin:10px 0}
+.breathing-note p{font-size:12px}
+.stats-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px}
+.chart{height:215px;display:flex;align-items:flex-end;gap:12px;padding:22px 0 0}
+.chart-col{height:100%;display:flex;align-items:center;flex-direction:column;justify-content:flex-end;gap:8px;flex:1;min-width:0;font-size:9px;color:var(--muted)}
+.chart-col i{display:block;width:100%;max-width:48px;min-height:3px;background:linear-gradient(#AC97F6,#6550D6);border-radius:7px 7px 4px 4px}
+.chart-col b{font-size:9px;font-weight:600;color:var(--primary)}
+.donut{height:153px;width:153px;border-radius:50%;background:conic-gradient(var(--line) 0deg 360deg);position:relative;display:grid;place-items:center;margin:18px auto}
+.donut:before{content:"";position:absolute;inset:21px;border-radius:50%;background:var(--surface)}
+.donut>div{position:relative;text-align:center;font:800 29px var(--heading)}
+.donut small{font:400 9px var(--body);color:var(--muted);display:block;margin-top:3px}
+.legend-row{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:11px}
+.legend-row b{margin-left:auto}
+.category-table{border-collapse:collapse;width:100%;font-size:12px}
+.category-table td,.category-table th{text-align:left;padding:13px 0;border-bottom:1px solid var(--line)}
+.category-table th{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.category-table td:last-child,.category-table th:last-child{text-align:right}
+.achievement-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.achievement{background:var(--bg);border:1px solid var(--line);padding:19px 13px;border-radius:15px;text-align:center;position:relative}
+.achievement .achievement-emoji{font-size:27px;display:block;margin-bottom:10px}
+.achievement h4{font-size:11px;letter-spacing:0}
+.achievement p{font-size:9px;color:var(--muted);margin-top:5px}
+.achievement.locked .achievement-emoji{filter:grayscale(1);opacity:.6}
+.achievement.unlocked{border-color:#A896E0;background:var(--soft)}
+.stats-insight{padding:17px;border-radius:13px;background:var(--soft);color:var(--primary);font-size:12px;margin-top:20px}
+.mood-summary{display:flex;align-items:center;gap:17px;padding:20px;background:var(--bg);border-radius:15px}
+.mood-summary .emoji{font-size:32px}
+
+/* 06 · Forms, dialogs, settings and feedback. */
+input,select,textarea{width:100%;min-height:44px;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);font-size:13px}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
+textarea{resize:vertical;min-height:94px;line-height:1.65}
+input[type="checkbox"]{width:18px;height:18px;min-height:18px;accent-color:#4F46E5}
+input[type="color"]{padding:5px;width:52px}
+.field{display:grid;gap:7px;font-size:12px;font-weight:650}
+.field small{font-size:10px;font-weight:400;color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.full{grid-column:1/-1}
+.day-options{display:flex;gap:6px;flex-wrap:wrap}
+.day-option{position:relative}
+.day-option input{position:absolute;opacity:0;width:1px}
+.day-option span{display:grid;place-items:center;min-width:44px;height:44px;border:1px solid var(--line);border-radius:11px;font-size:11px;background:var(--surface)}
+.day-option input:checked+span{background:var(--soft);border-color:var(--primary);color:var(--primary)}
+.day-option input:focus-visible+span{outline:3px solid var(--primary);outline-offset:2px}
+.form-help{font-size:11px;background:var(--bg);border-radius:13px;padding:15px;line-height:1.8;color:var(--muted);margin:17px 0}
+.form-error{color:var(--red);background:var(--red-bg);border-radius:10px;padding:12px 14px;font-size:12px;margin-top:16px}
+.form-error:empty{display:none}
+dialog{width:calc(100% - 32px);max-width:640px;max-height:90vh;max-height:90dvh;padding:0;border:1px solid var(--line);border-radius:23px;background:var(--surface);color:var(--text);box-shadow:0 24px 90px #10112640;overflow:auto}
+dialog::backdrop{background:#171A365D;backdrop-filter:blur(5px)}
+.dialog-head{padding:22px 25px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dialog-head h2{font-size:22px}
+.dialog-body{padding:0 25px 25px}
+.dialog-intro{font-size:12px;color:var(--muted);margin-bottom:21px}
+.dialog-actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:22px}
+.setting-section{padding:25px;margin-bottom:20px}
+.settings-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:start}
+.settings-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:17px 0;border-bottom:1px solid var(--line)}
+.settings-row:last-child{border:0}
+.settings-row label{font-size:12px;font-weight:650}
+.settings-row p{font-size:10px;color:var(--muted);margin-top:3px;max-width:270px}
+.settings-row select,.settings-row input:not([type="checkbox"]){max-width:160px}
+.backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:19px}
+.file-status{margin-top:18px;border-radius:13px;background:var(--bg);padding:15px;font-size:11px;overflow-wrap:anywhere}
+.file-status strong{display:block;font-size:12px;margin-bottom:5px}
+.category-colors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.category-color{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px}
+.shortcuts{display:grid;gap:12px;margin-top:15px}
+.shortcuts>div{display:flex;justify-content:space-between;font-size:11px}
+.search-results{max-height:50vh;overflow:auto;margin-top:17px}
+.search-result{display:block;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:13px 15px;width:100%;min-height:65px;margin-bottom:8px}
+.search-result strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.search-result span{font-size:10px;color:var(--muted)}
+.search-result .pill{float:right}
+.toast{position:fixed;left:calc(50% + 113px);bottom:25px;transform:translateX(-50%);background:var(--text);color:var(--surface);box-shadow:0 10px 30px #0002;z-index:80;border-radius:14px;padding:13px 17px;max-width:calc(100% - 36px);font-size:12px;display:flex;align-items:center;gap:16px}
+.toast:empty{display:none}
+.toast button{min-height:44px;background:transparent;border:1px solid currentColor;color:inherit;border-radius:9px;padding:8px 12px;font-size:11px;flex-shrink:0}
+.timer-dock{position:fixed;right:25px;bottom:24px;padding:10px 12px 10px 17px;display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 35px #22223b18;z-index:25}
+.timer-dock strong{font:800 21px var(--heading);font-variant-numeric:tabular-nums}
+.timer-dock small{font-size:9px;color:var(--muted);display:block}
+.motion-enter{animation:enter .3s ease}
+@keyframes enter{from{opacity:0;transform:translateY(5px)}
+to{opacity:1;transform:translateY(0)}
+}
+.pulse{animation:pulse .35s ease}
+@keyframes pulse{50%{transform:scale(1.025)}
+}
+
+/* 07 · Responsive layouts retain 44px controls and a readable mobile rhythm. */
+@media(min-width:1550px){.workspace{padding-left:65px;padding-right:65px}
+}
+
+@media(max-width:1200px){.sidebar{width:202px;padding-left:13px;padding-right:13px}
+.workspace{margin-left:202px;padding-left:26px;padding-right:26px}
+.metrics{gap:11px}
+.metric{padding:17px}
+.metric-top{font-size:9px}
+.dashboard-grid{gap:17px;grid-template-columns:1.3fr 1fr}
+.pad{padding:21px}
+.welcome{padding:27px}
+.hero-orbit{margin-right:0;width:118px;height:118px;flex-basis:118px}
+.stats-grid{grid-template-columns:1.3fr 1fr}
+.habit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.toast{left:calc(50% + 101px)}
+}
+
+@media(max-width:960px){.sidebar{width:82px;padding:26px 12px}
+.brand{padding:0;justify-content:center}
+.brand-name,.brand-caption,.nav-label-small,.nav-label,.nav-count,.side-goal,.saved-line,.sidebar-bottom .label{display:none}
+.navigation{margin-top:32px}
+.nav-item{justify-content:center;padding:12px}
+.workspace{margin-left:82px;padding:23px}
+.utility-search{min-width:44px;padding:11px}
+.utility-search span,.utility-search .kbd{display:none}
+.dashboard-grid{grid-template-columns:1.15fr 1fr}
+.metric-caption{font-size:9px}
+.metric-top .metric-icon{display:none}
+.metric-number{font-size:25px}
+.welcome h2{font-size:25px}
+.hero-orbit{width:105px;height:105px;flex-basis:105px}
+.hero-orbit div{font-size:25px}
+.stats-grid,.settings-grid{grid-template-columns:1fr}
+.focus-layout{grid-template-columns:1.2fr 1fr}
+.focus-room{padding:25px}
+.timer-dial{width:220px;height:220px}
+.toast{left:calc(50% + 41px)}
+.calendar-day{min-height:90px;padding:9px}
+.history-filters{grid-template-columns:1fr 1fr}
+.history-filters .search-field{grid-column:1/-1}
+}
+
+@media(max-width:740px){.dashboard-grid{grid-template-columns:1fr}
+.dashboard-grid>.stack{gap:18px}
+.hero-orbit{display:none}
+.welcome-copy{max-width:100%}
+.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+.metric-top .metric-icon{display:grid}
+.metric-caption,.metric-top{font-size:10px}
+.focus-layout{grid-template-columns:1fr}
+.focus-room{padding:28px}
+.timer-dial{width:255px;height:255px}
+.page-heading{align-items:flex-start}
+.page-heading .page-actions{justify-content:flex-end}
+.page-heading h1{font-size:30px}
+.date-strip{gap:6px}
+.date-tile{padding:11px 4px}
+.achievement-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.calendar-day .cal-task{display:none}
+.calendar-day{min-height:78px}
+.calendar-label{font-size:9px}
+}
+
+@media(max-width:600px){.sidebar{inset:auto 0 0;width:100%;height:calc(74px + env(safe-area-inset-bottom));border-right:0;border-top:1px solid var(--line);padding:7px 9px calc(7px + env(safe-area-inset-bottom))}
+.sidebar .brand,.sidebar-bottom{display:none}
+.navigation{display:flex;gap:2px;justify-content:space-around;margin:0}
+.nav-item{flex-direction:column;gap:3px;padding:5px 4px;min-height:56px;min-width:44px;flex:1;border-radius:10px}
+.nav-label{display:block;font-size:8px;white-space:nowrap}
+.nav-item .icon{width:19px;height:19px}
+.workspace{margin:0;padding:17px 17px calc(100px + env(safe-area-inset-bottom))}
+.utility{margin-bottom:23px}
+.utility-path .desktop-path{display:none}
+.mobile-brand{display:inline;font:800 23px var(--heading);letter-spacing:-1px;color:var(--text)}
+.utility-actions{gap:2px}
+.utility .avatar,.utility #top-streak{display:none}
+.page-heading{gap:12px;margin-bottom:21px;flex-wrap:wrap}
+.page-heading h1{font-size:29px}
+.page-heading .eyebrow{font-size:9px}
+.page-heading p{font-size:11px}
+.page-actions .btn{font-size:11px;padding:10px 13px}
+.page-heading .page-actions{justify-content:flex-start}
+.welcome{padding:25px 23px;min-height:210px;border-radius:20px;margin-bottom:17px}
+.welcome h2{font-size:26px}
+.welcome p{font-size:11px}
+.welcome-actions{flex-wrap:wrap}
+.metrics{gap:11px;margin-bottom:19px}
+.metric{padding:16px;border-radius:16px}
+.metric-number{font-size:27px}
+.metric-top{font-size:9px}
+.metric-caption{font-size:9px}
+.metric-icon{width:28px;height:28px}
+.dashboard-grid{gap:18px}
+.card{border-radius:19px}
+.pad{padding:20px}
+.card-head{gap:9px}
+.card-head h3{font-size:16px}
+.card-head .btn{font-size:10px;padding:9px 12px}
+.task-row{gap:7px;padding:13px 0}
+.task-title{font-size:12px}
+.task-row>.btn{width:44px;padding:10px}
+.task-check{margin-left:-7px}
+.habit-grid{grid-template-columns:1fr}
+.habit-card{padding:22px}
+.habit-card .week-dot{width:32px;height:32px}
+.date-strip{gap:5px}
+.date-tile{min-height:77px;border-radius:11px;padding:10px 3px}
+.date-tile span{font-size:9px}
+.date-tile strong{font-size:17px}
+.period-bar h3{font-size:15px}
+.period-bar .segment button{padding:8px 10px}
+.calendar{gap:4px}
+.calendar-day{padding:7px 4px;min-height:70px;border-radius:9px}
+.calendar-day strong{font-size:11px}
+.calendar-day .cal-count{font-size:8px}
+.calendar-label{font-size:8px;padding:5px 1px}
+.planner-day-head{padding:15px}
+.planner-day-body{padding:0 13px}
+.filterbar{gap:8px}
+.filterbar .search-field{flex-basis:100%}
+.filterbar select{flex:1;min-width:0;max-width:none}
+.history-filters{gap:8px;grid-template-columns:1fr 1fr}
+.history-filters select{grid-column:1/-1}
+.entry-row{padding:16px 14px;gap:10px;flex-wrap:wrap}
+.entry-row .entry-time{min-width:32px;font-size:9px}
+.entry-row .row-actions{width:100%;justify-content:flex-end}
+.entry-row h3{font-size:12px}
+.entry-row p{font-size:11px}
+.focus-room{padding:25px 19px}
+.focus-room .segment button{font-size:10px;padding:8px 10px}
+.timer-dial{width:235px;height:235px}
+.timer-clock{font-size:53px}
+.stats-grid{gap:18px}
+.chart{gap:6px;height:190px}
+.chart-col{font-size:8px}
+.chart-col b{font-size:8px}
+.category-table{font-size:10px}
+.achievement{padding:18px 12px}
+.settings-row{gap:13px}
+.settings-row select,.settings-row input:not([type="checkbox"]){max-width:135px}
+.settings-row p{font-size:10px}
+.setting-section{padding:21px}
+.backup-actions{gap:8px}
+.backup-actions .btn{padding:10px;font-size:11px}
+.form-grid{grid-template-columns:1fr}
+.full{grid-column:auto}
+.dialog-head{padding:19px 20px 14px}
+.dialog-head h2{font-size:20px}
+.dialog-body{padding:0 20px 22px}
+.toast{left:50%;bottom:calc(89px + env(safe-area-inset-bottom));width:max-content;font-size:11px}
+.timer-dock{bottom:calc(87px + env(safe-area-inset-bottom));right:14px;left:14px;justify-content:space-between;padding:9px 12px}
+.timer-dock strong{font-size:19px}
+.notice{flex-wrap:wrap}
+.footer{font-size:9px}
+.mood-btn span{font-size:8px}
+.day-options{gap:5px}
+.day-option span{min-width:36px;width:36px;height:44px;font-size:10px}
+.segment button{min-height:40px}
+.journal-label{font-size:10px}
+}
+
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+:root[data-reduced-motion="true"] *{transition:none!important;animation:none!important}
+
+@media print{.sidebar,.utility,.btn,.toast,.timer-dock,.page-actions,.filterbar{display:none!important}
+.workspace{margin:0;padding:0}
+.card{box-shadow:none;break-inside:avoid}
+.heatmap-scroll{overflow:visible}
+body{background:white}
+}
+
+/* Android stores everyday changes in its private app data; file linking is not needed there. */
+:root[data-native="true"] .linked-file-section,:root[data-native="true"] [data-action="persist"]{display:none}
+
+/* 08 · Accessible input choices, final responsive polish. */
+.import-option{display:flex;align-items:flex-start;gap:13px;padding:17px;margin-top:13px;border:1px solid var(--line);border-radius:14px;cursor:pointer;background:var(--bg)}
+
+.import-option input[type="radio"]{width:20px;min-width:20px;height:20px;min-height:20px;margin:3px 0 0;accent-color:#4F46E5}
+
+.import-option strong{display:block;font-size:13px}
+.import-option small{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:5px}
+
+.task-row.dragging{opacity:.45}
+.segment button{min-height:44px}
+.task-title{min-height:35px}
+
+.setting-section input[type="checkbox"]{min-width:24px;min-height:24px;width:24px;height:24px}
+
+.card-head>div,.page-heading>div{min-width:0}
+.page-heading h1{overflow-wrap:anywhere}
+.page-actions{flex-shrink:0;max-width:42%}
+.period-bar>.row{flex-wrap:wrap}
+
+button:disabled{transform:none}
+.settings-row label{cursor:default}
+.settings-row .btn{flex-shrink:0}
+
+body:has(.timer-dock:not([hidden])) .toast{bottom:106px}
+
+@media(max-width:740px){.page-actions{max-width:100%}
+.page-heading{display:block}
+.page-heading .page-actions{margin-top:17px;justify-content:flex-start}
+.period-bar .segment{flex-shrink:0}
+}
+
+@media(max-width:600px){input,select,textarea{font-size:16px}
+.quick-form input{font-size:16px}
+.day-option span{width:36px;min-width:36px}
+.task-title{font-size:13px}
+.card-head p,.page-heading p,.welcome p{font-size:12px}
+.metric-caption,.task-meta,.list-bottom,.saved-line{font-size:10px}
+.toast{line-height:1.6}
+body:has(.timer-dock:not([hidden])) .toast{bottom:calc(170px + env(safe-area-inset-bottom))}
+.day-options{gap:5px}
+.backup-actions{grid-template-columns:1fr}
+.category-colors{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Asosiy qismga o‘tish</a>
+<aside class="sidebar" aria-label="Asosiy menyu">
+ <div class="brand"><span class="brand-mark" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5M17.5 6.5 19 5"/><circle cx="12" cy="12" r="5"/><path d="m9.5 12 1.5 1.5 3-3"/></svg></span><span class="brand-name">dayloom<small>.</small></span></div>
+ <div class="brand-caption">DAILY TRACKER</div><div class="nav-label-small">SHAXSIY MAKON</div>
+ <nav class="navigation" id="navigation"></nav>
+ <div class="sidebar-bottom"><div class="side-goal" id="side-goal"></div><div class="saved-line" id="save-status"></div><button class="btn ghost" data-action="navigate" data-view="settings" title="Sozlamalar"><span data-icon="settings"></span><span class="label">Sozlamalar</span></button></div>
+</aside>
+<div class="workspace">
+ <header class="utility"><div class="utility-path"><span class="desktop-path">Har kuni, o‘zingiz uchun.</span><span class="mobile-brand">dayloom<span style="color:var(--primary)">.</span></span></div><div class="utility-actions">
+  <button class="utility-search" data-action="search" aria-label="Barcha ma’lumotlarda qidirish"><span data-icon="search"></span><span>Qidirish</span><kbd class="kbd">/</kbd></button>
+  <span class="pill purple" id="top-streak">🔥 0 kun</span>
+  <button class="btn ghost square" data-action="theme" id="theme-button" aria-label="Rang rejimini o‘zgartirish"></button>
+  <button class="btn ghost square" data-action="navigate" data-view="settings" aria-label="Sozlamalar"><span data-icon="settings"></span></button>
+  <span class="avatar" id="avatar" aria-hidden="true">S</span>
+ </div></header>
+ <div class="notice" id="storage-notice" hidden></div>
+ <main id="main" tabindex="-1"></main>
+ <p class="footer"><span data-icon="shield"></span> Kichik qadamlar, haqiqiy o‘sish. Ma’lumotlaringiz shu qurilmada.</p>
+</div>
+<dialog id="dialog" aria-labelledby="dialog-title"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+<div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+<div class="timer-dock" id="timer-dock" hidden></div>
+<input type="file" id="import-file" accept=".json,application/json" hidden>
+<noscript>Dayloom ishlashi uchun brauzeringizda JavaScript yoqilgan bo‘lishi kerak.</noscript>
+<script>(function(){
+'use strict';
+/* 01 · Data model and calendar helpers. All dates use the device's local day.
+   UTC day ordinals are used only for date arithmetic, avoiding DST streak bugs. */
+const STORE='dayloom_data_v2',LEGACY='daily_activity_data_v1',DAY=86400000;
+const MONTHS=['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'];
+const SHORT_MONTHS=['Yan','Fev','Mar','Apr','May','Iyn','Iyl','Avg','Sen','Okt','Noy','Dek'];
+const WEEK=['Du','Se','Ch','Pa','Ju','Sh','Ya'],WEEK_FULL=['Dushanba','Seshanba','Chorshanba','Payshanba','Juma','Shanba','Yakshanba'];
+const COLORS=['#7460D8','#269D77','#3989C3','#C56B37','#B3568C','#92721D','#368B8B'];
+const CATEGORIES=['Ingliz tili','Kod','CTF','Loyiha','O‘qish','Sog‘liq','Shaxsiy'];
+const MOODS=[{id:1,emoji:'😓',label:'Qiyin'},{id:2,emoji:'😕',label:'Past'},{id:3,emoji:'😐',label:'O‘rtacha'},{id:4,emoji:'🙂',label:'Yaxshi'},{id:5,emoji:'😄',label:'Ajoyib'}];
+const $=id=>document.getElementById(id);
+const esc=value=>String(value==null?'':value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const trim=(s,max=500)=>String(s==null?'':s).trim().slice(0,max);
+const clamp=(n,min,max)=>Math.min(max,Math.max(min,Number(n)||0));
+const uid=()=>globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():'id-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
+const dateKey=date=>{const d=date||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const today=()=>dateKey(new Date());
+const dateFrom=key=>new Date(Number(key.slice(0,4)),Number(key.slice(5,7))-1,Number(key.slice(8,10)),12);
+const validDate=key=>typeof key==='string' && /^\d{4}-\d{2}-\d{2}$/.test(key) && Number(key.slice(0,4))>=1900 && Number(key.slice(0,4))<=2200 && dateKey(dateFrom(key))===key;
+const ordinal=key=>{const d=dateFrom(key);return Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/DAY;};
+const addDays=(key,n)=>{const d=dateFrom(key);d.setDate(d.getDate()+n);return dateKey(d);};
+const monday=key=>addDays(key,-((dateFrom(key).getDay()+6)%7));
+const addMonths=(key,n)=>{const d=dateFrom(key),day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+n);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));return dateKey(d);};
+const monthStart=key=>key.slice(0,7)+'-01';
+const monthEnd=key=>addDays(addMonths(monthStart(key),1),-1);
+const formatDate=(key,long=false)=>{if(!validDate(key))return '';const d=dateFrom(key);return d.getDate()+' '+MONTHS[d.getMonth()].toLowerCase()+(long?' '+d.getFullYear():'');};
+const dayName=key=>WEEK_FULL[(dateFrom(key).getDay()+6)%7];
+const clock=sec=>Math.floor(Math.max(0,sec)/60).toString().padStart(2,'0')+':'+Math.floor(Math.max(0,sec)%60).toString().padStart(2,'0');
+const timeText=ms=>new Date(ms||Date.now()).toLocaleTimeString('uz-UZ',{hour:'2-digit',minute:'2-digit'});
+const initials=name=>trim(name||'Siz').split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+const clone=value=>JSON.parse(JSON.stringify(value));
+const safeColor=value=>/^#[0-9a-fA-F]{6}$/.test(value||'')?value:null;
+function defaultSettings(){return {name:'',theme:'system',sound:false,reduceMotion:false,summaries:true,dailyGoal:3,monthlyGoal:60,focusGoal:60,focusMinutes:25,shortMinutes:5,longMinutes:15};}
+function defaultTimer(){return {mode:'focus',status:'idle',duration:1500,remaining:1500,endAt:0,runId:'',taskId:'',startedAt:0};}
+function defaultState(){return {app:'dayloom',version:2,activities:{},tasks:[],habits:[],journal:{},focusSessions:[],achievements:[],tagColors:{},settings:defaultSettings(),timer:defaultTimer(),meta:{revision:0,updatedAt:0,migrated:false}};}
+function normalizeEntry(raw,day){
+ if(!raw || typeof raw!=='object' || !trim(raw.title))throw Error('Yozuv sarlavhasi noto‘g‘ri: '+day);
+ return {id:trim(raw.id||uid(),180),title:trim(raw.title,300),description:trim(raw.description,5000),tag:trim(raw.tag,80),time:/^(?:[01]?\d|2[0-3]):[0-5]\d$/.test(raw.time||'')?raw.time.padStart(5,'0'):'12:00',duration:Math.round(clamp(raw.duration,0,1440)),source:['manual','task','habit','focus'].includes(raw.source)?raw.source:'manual',taskId:trim(raw.taskId,180),habitId:trim(raw.habitId,180),sessionId:trim(raw.sessionId,180),createdAt:clamp(raw.createdAt||Date.now(),0,9e15),updatedAt:clamp(raw.updatedAt||raw.createdAt||Date.now(),0,9e15)};
+}
+function normalizeTask(raw,date){
+ if(!raw || typeof raw!=='object' || !trim(raw.title) || !validDate(raw.date||date))throw Error('Reja sanasi yoki sarlavhasi noto‘g‘ri.');
+ return {id:trim(raw.id||uid(),180),title:trim(raw.title,300),description:trim(raw.description,3000),date:raw.date||date,tag:trim(raw.tag,80),priority:['high','medium','low'].includes(raw.priority)?raw.priority:'medium',estimate:Math.round(clamp(raw.estimate,0,1440)),time:/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(raw.time||'')?raw.time:'',done:raw.done===true,completedAt:clamp(raw.completedAt,0,9e15),completedEntryId:trim(raw.completedEntryId,180),repeat:['daily','weekdays','weekly','monthly'].includes(raw.repeat)?raw.repeat:'none',seriesId:trim(raw.seriesId,180),repeatAnchor:Math.round(clamp(raw.repeatAnchor||Number((raw.date||date).slice(8)),1,31)),createdAt:clamp(raw.createdAt||Date.now(),0,9e15),updatedAt:clamp(raw.updatedAt||Date.now(),0,9e15)};
+}
+function normalizeHabit(raw){
+ if(!raw || !trim(raw.title))throw Error('Odat nomi noto‘g‘ri.');
+ const logs={};Object.entries(raw.logs||{}).forEach(([d,n])=>{if(validDate(d) && Number.isFinite(Number(n)))logs[d]=Math.round(clamp(n,0,9999));});
+ const days=Array.from(new Set((Array.isArray(raw.days)?raw.days:[0,1,2,3,4,5,6]).map(Number).filter(n=>Number.isInteger(n)&&n>=0&&n<=6)));
+ if(!days.length)throw Error('Odat uchun kamida bitta hafta kuni tanlang.');
+ return {id:trim(raw.id||uid(),180),title:trim(raw.title,150),icon:trim(raw.icon||'🌱',8),tag:trim(raw.tag,80),target:Math.round(clamp(raw.target||1,1,999)),unit:trim(raw.unit||'marta',30),days:days,createdDate:validDate(raw.createdDate)?raw.createdDate:today(),archived:raw.archived===true,logs:logs,color:safeColor(raw.color)||COLORS[0]};
+}
+function normalizeState(raw){
+ if(!raw || typeof raw!=='object' || Array.isArray(raw))throw Error('Bu Daily Tracker zaxira fayli emas.');
+ if(raw.version && raw.app==='dayloom' && raw.version!==2)throw Error('Ushbu zaxira versiyasi qo‘llab-quvvatlanmaydi.');
+ const legacy=raw.app!=='dayloom',s=defaultState();
+ const isDateMap=Object.keys(raw).length>0 && Object.keys(raw).every(validDate);
+ if(!raw.activities && !isDateMap && raw.app!=='dayloom')throw Error('Faylda Daily Tracker ma’lumotlari topilmadi.');
+ const activities=raw.activities||(isDateMap?raw:{});
+ if(typeof activities!=='object' || Array.isArray(activities))throw Error('Faollik ma’lumotlari noto‘g‘ri.');
+ for(const k of ['tasks','habits','focusSessions','achievements'])if(raw[k]!=null&&!Array.isArray(raw[k]))throw Error(k+' ro‘yxati noto‘g‘ri.');
+ const used=new Set();let size=0;
+ Object.entries(activities).forEach(([d,entries])=>{
+  if(!validDate(d) || !Array.isArray(entries))throw Error('Faollik sanasi yoki formati noto‘g‘ri: '+d);
+  if((size+=entries.length)>100000)throw Error('Zaxira faylida juda ko‘p yozuv bor.');
+  s.activities[d]=entries.map(e=>{const n=normalizeEntry(e,d);if(used.has(n.id))throw Error('Faylda bir xil ID li yozuvlar bor.');used.add(n.id);return n;});
+ });
+ const tasks=Array.isArray(raw.tasks)?raw.tasks:Object.entries(raw.roadmap||{}).flatMap(([d,items])=>{if(!validDate(d)||!Array.isArray(items))throw Error('Roadmap ma’lumotlari noto‘g‘ri.');return items.map(t=>Object.assign({},t,{date:d}));});
+ if(tasks.length>50000)throw Error('Juda ko‘p reja bor.');
+ s.tasks=tasks.map(t=>normalizeTask(t,t.date));
+ const entryById=new Map(Object.values(s.activities).flat().map(e=>[e.id,e]));
+ const taskIds=new Set();s.tasks.forEach(t=>{if(taskIds.has(t.id))throw Error('Faylda bir xil ID li rejalar bor.');taskIds.add(t.id);if(t.completedEntryId){const entry=entryById.get(t.completedEntryId);if(entry){entry.taskId=t.id;entry.source='task';}}});
+ if(raw.habits&&raw.habits.length>1000)throw Error('Zaxirada 1000 tadan ko‘p odat bor.');
+ s.habits=(raw.habits||[]).map(normalizeHabit);
+ const habitIds=new Set();s.habits.forEach(h=>{if(habitIds.has(h.id))throw Error('Faylda bir xil ID li odatlar bor.');habitIds.add(h.id);});
+ Object.entries(raw.journal||{}).forEach(([d,j])=>{if(validDate(d)&&j&&typeof j==='object')s.journal[d]={mood:Math.round(clamp(j.mood,0,5)),note:trim(j.note,5000)};});
+ s.focusSessions=(Array.isArray(raw.focusSessions)?raw.focusSessions:[]).map(f=>{if(!f||!validDate(f.date))throw Error('Fokus seansi sanasi noto‘g‘ri.');return {id:trim(f.id||uid(),180),date:f.date,minutes:clamp(f.minutes,0,1440),title:trim(f.title||'Fokus seansi',300),taskId:trim(f.taskId,180),completedAt:clamp(f.completedAt||Date.now(),0,9e15),partial:f.partial===true};});
+ const sessionIds=new Set();s.focusSessions=s.focusSessions.filter(f=>{if(sessionIds.has(f.id))return false;sessionIds.add(f.id);return true;});
+ s.achievements=(Array.isArray(raw.achievements)?raw.achievements:[]).filter(x=>x&&typeof x.id==='string').map(x=>({id:trim(x.id,80),unlockedAt:validDate(x.unlockedAt)?x.unlockedAt:today()}));
+ Object.entries(raw.tagColors||{}).forEach(([k,v])=>{if(safeColor(v))Object.defineProperty(s.tagColors,trim(k,80),{value:v,enumerable:true,writable:true,configurable:true});});
+ const p=raw.settings||{},d=defaultSettings();s.settings={name:trim(p.name,60),theme:['system','light','dark'].includes(p.theme)?p.theme:'system',sound:p.sound===true,reduceMotion:p.reduceMotion===true,summaries:p.summaries!==false,dailyGoal:Math.round(clamp(p.dailyGoal||d.dailyGoal,1,100)),monthlyGoal:Math.round(clamp(p.monthlyGoal||d.monthlyGoal,1,5000)),focusGoal:Math.round(clamp(p.focusGoal||d.focusGoal,1,720)),focusMinutes:Math.round(clamp(p.focusMinutes||25,1,180)),shortMinutes:Math.round(clamp(p.shortMinutes||5,1,60)),longMinutes:Math.round(clamp(p.longMinutes||15,1,120))};
+ const t=raw.timer||{};s.timer={mode:['focus','short','long'].includes(t.mode)?t.mode:'focus',status:['idle','running','paused','complete'].includes(t.status)?t.status:'idle',duration:clamp(t.duration||s.settings.focusMinutes*60,60,10800),remaining:clamp(t.remaining==null?s.settings.focusMinutes*60:t.remaining,0,10800),endAt:clamp(t.endAt,0,9e15),runId:trim(t.runId,180),taskId:trim(t.taskId,180),startedAt:clamp(t.startedAt,0,9e15)};
+ s.timer.remaining=Math.min(s.timer.remaining,s.timer.duration);
+ if(s.timer.status==='running' && (!s.timer.runId||!s.timer.endAt))s.timer.status='idle';
+ s.meta={revision:clamp(raw.meta&&raw.meta.revision,0,1e12),updatedAt:clamp(raw.meta&&raw.meta.updatedAt,0,9e15),migrated:legacy||Boolean(raw.meta&&raw.meta.migrated)};
+ return s;
+}
+/* 02 · Safe storage and migration. The old key is never deleted or overwritten. */
+let storageIssue='',rawRecovery='',knownRaw=null,storageConflict=false;
+function readLocal(key){try{return localStorage.getItem(key);}catch(e){storageIssue='Brauzer saqlashga ruxsat bermayapti. Yopishdan oldin JSON zaxira yuklab oling.';return null;}}
+function loadState(){
+ const raw=readLocal(STORE);knownRaw=raw;
+ if(raw){try{return normalizeState(JSON.parse(raw));}catch(e){rawRecovery=raw;storageIssue='Saqlangan nusxani o‘qib bo‘lmadi. Asl ma’lumot himoyalangan. Sozlamalarda uni yuklab olish yoki zaxiradan tiklash mumkin.';return defaultState();}}
+ const old=readLocal(LEGACY);
+ if(old){try{const s=normalizeState(JSON.parse(old));s.settings.monthlyGoal=Math.round(clamp(readLocal('monthly_goal')||60,1,5000));s.settings.sound=readLocal('sound_enabled')==='true';s.settings.reduceMotion=readLocal('reduce_motion')==='true';s.settings.summaries=readLocal('summaries_enabled')!=='false';return s;}catch(e){rawRecovery=old;storageIssue='Eski ma’lumotni avtomatik ko‘chirish imkoni bo‘lmadi. Asl nusxa saqlanmoqda; uni Sozlamalardan yuklab oling.';}}
+ return defaultState();
+}
+let state=loadState();
+let view='today',plannerMode='day',selectedDate=today(),shownYear=new Date().getFullYear(),statsMonth=today().slice(0,7),taskFilter='all',taskTag='',taskQuery='',historyFilter={query:'',tag:'',from:'',to:'',page:0};
+let modalReturn=null,toastTimer=0,undoRecord=null,journalTimer=0,timerInterval=0,lastDay=today(),audioContext=null,importPending=null,passwordJob=null,link=null,linkedHandle=null,linkSaveTimer=0,linkBusy=false,linkDirty=false,installPrompt=null;
+function saveState(){
+ state.meta.updatedAt=Date.now();state.meta.revision++;
+ if(rawRecovery||storageConflict){updateStorage();return false;}
+ try{
+  const current=localStorage.getItem(STORE);
+  if(current!==knownRaw){storageConflict=true;storageIssue='Boshqa oynada ma’lumotlar o‘zgardi. Avval bu sessiyani eksport qiling, keyin yangi nusxani yuklang.';updateStorage();return false;}
+  const raw=JSON.stringify(state);localStorage.setItem(STORE,raw);knownRaw=raw;storageIssue='';
+ }catch(e){storageIssue='Oxirgi o‘zgarishlar faqat shu sessiyada. Qurilma xotirasi to‘lgan yoki saqlash bloklangan; zaxira yuklab oling.';}
+ updateStorage();queueLinkedSave();return !storageIssue;
+}
+function updateStorage(){
+ if(!$('save-status'))return;
+ $('save-status').innerHTML='<span class="dot" style="color:var(--'+(storageIssue?'amber':'green')+')"></span><span>'+(storageIssue?'Eksport qilish kerak':'Qurilmada saqlandi')+'</span>';
+ $('storage-notice').hidden=!storageIssue;
+ $('storage-notice').innerHTML=storageIssue?'<span>'+esc(storageIssue)+'</span><div class="row wrap"><button class="btn" data-action="export">Zaxira olish</button>'+(storageConflict?'<button class="btn" data-action="reload-data">Yangi nusxani yuklash</button>':'')+'</div>':'';
+}
+async function requestPersistence(){try{if(navigator.storage&&navigator.storage.persist)await navigator.storage.persist();}catch(e){}}
+function toast(message,undo=false){
+ clearTimeout(toastTimer);$('toast').innerHTML='<span>'+esc(message)+'</span>'+(undo?'<button data-action="undo">Bekor qilish</button>':'');
+ toastTimer=setTimeout(()=>{$('toast').textContent='';},undo?9000:4200);
+}
+function announce(message){$('announcer').textContent='';setTimeout(()=>{$('announcer').textContent=message;},20);}
+function commit(change,message,undo=false,redraw=true){
+ const before=undo?clone(state):null;undoRecord=null;
+ change();checkAchievements();saveState();
+ if(undo)undoRecord={before:before,revision:state.meta.revision};
+ if(redraw)render();if(message)toast(message,undo);requestPersistence();
+}
+function undoLast(){
+ if(!undoRecord||undoRecord.revision!==state.meta.revision){toast('Keyingi o‘zgarishlar sabab bu amalni qaytarib bo‘lmaydi.');return;}
+ const revision=state.meta.revision;state=undoRecord.before;state.meta.revision=revision;undoRecord=null;saveState();render();toast('Oxirgi amal bekor qilindi.');
+}
+function entries(){return Object.entries(state.activities).flatMap(([date,list])=>list.map(entry=>({date,entry})));}
+function activityCount(date){return (state.activities[date]||[]).length;}
+function findEntry(id){return entries().find(x=>x.entry.id===id);}
+function findTask(id){return state.tasks.find(t=>t.id===id);}
+function findHabit(id){return state.habits.find(h=>h.id===id);}
+function addActivity(date,data){
+ const entry=normalizeEntry(Object.assign({id:uid(),time:timeText(),createdAt:Date.now(),updatedAt:Date.now()},data),date);
+ (state.activities[date]||(state.activities[date]=[])).push(entry);return entry;
+}
+function removeActivity(id){Object.keys(state.activities).forEach(d=>{state.activities[d]=state.activities[d].filter(e=>e.id!==id);if(!state.activities[d].length)delete state.activities[d];});}
+function activeDays(){
+ const set=new Set(Object.keys(state.activities).filter(d=>d<=today()&&state.activities[d].length));
+ state.habits.forEach(h=>Object.entries(h.logs).forEach(([d,n])=>{if(d<=today()&&n>0)set.add(d);}));
+ return Array.from(set).sort();
+}
+function streaks(){
+ const days=activeDays(),set=new Set(days);let current=0,best=0,run=0,previous=null,day=set.has(today())?today():addDays(today(),-1);
+ while(set.has(day)){current++;day=addDays(day,-1);}
+ days.forEach(d=>{run=previous!==null&&ordinal(d)-ordinal(previous)===1?run+1:1;best=Math.max(best,run);previous=d;});
+ return {current,best};
+}
+function categoryColor(tag){if(safeColor(state.tagColors[tag]))return state.tagColors[tag];let hash=0;for(const c of tag)hash=(hash*31+c.charCodeAt(0))|0;return COLORS[Math.abs(hash)%COLORS.length];}
+function categories(){return Array.from(new Set(CATEGORIES.concat(entries().map(x=>x.entry.tag),state.tasks.map(t=>t.tag),state.habits.map(h=>h.tag)).filter(Boolean))).sort((a,b)=>a.localeCompare(b));}
+function dueHabits(date=today()){return state.habits.filter(h=>!h.archived&&date>=h.createdDate&&h.days.includes(dateFrom(date).getDay()));}
+function habitDone(h,date=today()){return (h.logs[date]||0)>=h.target;}
+function habitStreak(h){
+ let day=today(),n=0;if(h.days.includes(dateFrom(day).getDay())&&!habitDone(h,day))day=addDays(day,-1);
+ for(let i=0;i<4000 && day>=h.createdDate;i++,day=addDays(day,-1)){if(!h.days.includes(dateFrom(day).getDay()))continue;if(!habitDone(h,day))break;n++;}
+ return n;
+}
+function focusMinutes(date=today()){return Math.round(state.focusSessions.filter(f=>f.date===date).reduce((n,f)=>n+f.minutes,0));}
+function monthEntries(month=statsMonth){return entries().filter(x=>x.date.startsWith(month));}
+function daysBetween(start,end){const days=[];for(let d=start;d<=end;d=addDays(d,1)){days.push(d);if(days.length>3700)break;}return days;}
+function categoryStats(items){const map=new Map();items.forEach(({date,entry})=>{const tag=entry.tag||'Boshqa',c=map.get(tag)||{tag,count:0,minutes:0,last:date};c.count++;c.minutes+=entry.duration||0;if(date>c.last)c.last=date;map.set(tag,c);});return Array.from(map.values()).sort((a,b)=>b.count-a.count);}
+const ACHIEVEMENTS=[
+ {id:'first_step',icon:'🌱',name:'Birinchi qadam',desc:'Birinchi ishni qayd eting.',check:()=>entries().length>=1},
+ {id:'events_10',icon:'✨',name:'Yaxshi boshlanish',desc:'10 ta bajarilgan ish.',check:()=>entries().length>=10},
+ {id:'events_50',icon:'🚀',name:'O‘sish sari',desc:'50 ta bajarilgan ish.',check:()=>entries().length>=50},
+ {id:'events_100',icon:'💎',name:'Yuzta kichik g‘alaba',desc:'100 ta bajarilgan ish.',check:()=>entries().length>=100},
+ {id:'streak_7',icon:'🔥',name:'Bir hafta davomida',desc:'7 kun uzluksiz faollik.',check:()=>streaks().best>=7},
+ {id:'streak_30',icon:'🏔️',name:'Mustahkam odat',desc:'30 kun uzluksiz faollik.',check:()=>streaks().best>=30},
+ {id:'specialist',icon:'🧠',name:'Mutaxassis',desc:'Bir kategoriyada 20 ta ish.',check:()=>categoryStats(entries()).some(c=>c.count>=20)},
+ {id:'full_month',icon:'🗓️',name:'To‘liq oy',desc:'Bir oyning har kuni faol bo‘ling.',check:()=>{const map=new Map();activeDays().forEach(d=>{const k=d.slice(0,7);map.set(k,(map.get(k)||0)+1);});return Array.from(map).some(([m,n])=>n===Number(monthEnd(m+'-01').slice(8)));}},
+ {id:'focus_60',icon:'🎯',name:'Diqqat kuchi',desc:'Jami 60 daqiqa fokus.',check:()=>state.focusSessions.reduce((n,f)=>n+f.minutes,0)>=60},
+ {id:'habit_7',icon:'🌿',name:'Odat ildiz otdi',desc:'Bir odatda 7 marta ketma-ket.',check:()=>state.habits.some(h=>habitStreak(h)>=7)},
+ {id:'plan_10',icon:'✅',name:'Rejadan natijaga',desc:'10 ta rejani bajaring.',check:()=>state.tasks.filter(t=>t.done).length>=10},
+ {id:'journal_7',icon:'📓',name:'O‘zingizga vaqt',desc:'7 kunlik kundalik yozuv.',check:()=>Object.values(state.journal).filter(j=>j.note).length>=7}
+];
+function checkAchievements(){ACHIEVEMENTS.forEach(a=>{if(!state.achievements.some(x=>x.id===a.id)&&a.check())state.achievements.push({id:a.id,unlockedAt:today()});});}
+/* 03 · Explicit task/activity links. Category matches never complete other tasks. */
+function nextRecurrence(task){
+ let next=task.date;
+ if(task.repeat==='none')return null;
+ const step=()=>{if(task.repeat==='weekly')next=addDays(next,7);else if(task.repeat==='monthly'){const d=dateFrom(monthStart(addMonths(next,1)));d.setDate(Math.min(task.repeatAnchor,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));next=dateKey(d);}else{next=addDays(next,1);if(task.repeat==='weekdays')while([0,6].includes(dateFrom(next).getDay()))next=addDays(next,1);}};
+ for(let i=0;i<120000;i++){step();if(next>today())return next;}return null;
+}
+function toggleTask(id){
+ const t=findTask(id);if(!t)return;
+ commit(()=>{
+  t.done=!t.done;t.updatedAt=Date.now();
+  if(t.done){
+   t.completedAt=Date.now();
+   const existing=entries().find(x=>x.entry.taskId===t.id);
+   if(!existing){const e=addActivity(today(),{title:t.title,description:t.description,tag:t.tag,source:'task',taskId:t.id,duration:0});t.completedEntryId=e.id;}else t.completedEntryId=existing.entry.id;
+   if(t.repeat!=='none'){
+    const next=nextRecurrence(t);t.seriesId=t.seriesId||t.id;
+    if(next&&!state.tasks.some(x=>x.seriesId===t.seriesId&&x.date===next)){state.tasks.push(Object.assign({},t,{id:uid(),date:next,done:false,completedAt:0,completedEntryId:'',createdAt:Date.now(),updatedAt:Date.now()}));}
+   }
+  }else{
+   entries().filter(x=>x.entry.taskId===t.id||x.entry.id===t.completedEntryId).forEach(x=>removeActivity(x.entry.id));t.completedEntryId='';t.completedAt=0;
+  }
+ },t.done?'Vazifa qayta ochildi.':'Yana bir kichik g‘alaba. Vazifa bajarildi!',true);
+ if(t.done)beep();
+}
+function updateHabit(id,delta,date=today()){
+ const h=findHabit(id);if(!h||h.archived||!validDate(date)||date>today()||date<h.createdDate||!h.days.includes(dateFrom(date).getDay()))return;
+ commit(()=>{
+  const value=clamp((h.logs[date]||0)+delta,0,h.target);h.logs[date]=value;
+  const match=entries().find(x=>x.date===date&&x.entry.habitId===id);
+  if(value>=h.target&&!match)addActivity(date,{title:h.title,tag:h.tag,source:'habit',habitId:id,description:h.target+' '+h.unit+' bajarildi.'});
+  else if(value<h.target&&match)removeActivity(match.entry.id);
+ },delta>0?'Odat bo‘yicha bir qadam oldinga.':'Odat natijasi yangilandi.',true);
+ if(habitDone(h,date))beep();
+}
+function moveOverdue(){
+ const count=state.tasks.filter(t=>!t.done&&t.date<today()).length;if(!count){toast('Qolib ketgan reja yo‘q.');return;}
+ commit(()=>state.tasks.forEach(t=>{if(!t.done&&t.date<today()){t.date=today();t.updatedAt=Date.now();}}),count+' ta reja bugunga ko‘chirildi.',true);
+}
+/* 04 · Interface primitives and shared navigation. */
+function icon(name){
+ const p={
+ today:'<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M7 2v4m10-4v4M3 10h18m-14 5 3 3 6-6"/>',
+ plans:'<rect x="4" y="4" width="16" height="17" rx="2"/><path d="M9 2h6v4H9zM8 11h.01M11 11h5M8 16h.01M11 16h5"/>',
+ habits:'<path d="M12 21v-8M12 15C5 16 2 10 3 4c7 0 11 4 9 11Zm0 2c7 0 10-5 9-10-6 0-9 4-9 10Z"/>',
+ activity:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+ focus:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+ stats:'<path d="M3 21h18M7 17V9m5 8V3m5 14v-5"/>',
+ settings:'<path d="m9 3-1 3-3 1-2 3 2 2-1 3 2 3 3-1 3 2 3-2 3 1 2-3-1-3 2-2-2-3-3-1-1-3H9Z"/><circle cx="12" cy="11" r="3"/>',
+ plus:'<path d="M5 12h14M12 5v14"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',
+ arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>',check:'<path d="m5 12 4 4L19 6"/>',
+ edit:'<path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-4-4L5 15l-1 5Z"/>',
+ trash:'<path d="M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/>',
+ moon:'<path d="M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11Z"/>',
+ monitor:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-4 0h8"/>',
+ play:'<path d="m8 4 12 8-12 8V4Z"/>',pause:'<path d="M8 4v16m8-16v16"/>',
+ shield:'<path d="m12 2 8 3v7c0 5-8 10-8 10S4 17 4 12V5l8-3Z"/><path d="m8 12 3 3 5-6"/>',
+ download:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/>',
+ upload:'<path d="M12 16V4m-4 4 4-4 4 4M4 16v5h16v-5"/>',
+ lock:'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v2"/>',
+ folder:'<path d="M3 6h7l2 3h9v11H3V6Z"/>',
+ book:'<path d="M3 4c4-1 7 0 9 2 2-2 5-3 9-2v16c-4-1-7 0-9 2-2-2-5-3-9-2V4Zm9 2v16"/>',
+ repeat:'<path d="m17 2 4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4m14-1v2a3 3 0 0 1-3 3H3"/>'
+ };
+ return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">'+(p[name]||p.today)+'</svg>';
+}
+const NAV=[['today','Bugun'],['plans','Rejalar'],['habits','Odatlar'],['activity','Faollik'],['focus','Fokus'],['stats','Statistika']];
+function applyTheme(){
+ document.documentElement.dataset.native=window.DayloomNative?'true':'false';
+ if(state.settings.theme==='system')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=state.settings.theme;
+ document.documentElement.dataset.reducedMotion=String(state.settings.reduceMotion);
+ document.documentElement.style.colorScheme=state.settings.theme==='system'?'light dark':state.settings.theme;
+ $('theme-button').innerHTML=icon(state.settings.theme==='system'?'monitor':state.settings.theme==='dark'?'moon':'sun');
+ $('theme-button').title='Rang rejimi: '+({system:'tizim',light:'yorug‘',dark:'tungi'}[state.settings.theme]);
+}
+function updateShell(){
+ $('navigation').innerHTML=NAV.map(([id,label])=>'<button class="nav-item '+(view===id?'active':'')+'" data-action="navigate" data-view="'+id+'" title="'+label+'" '+(view===id?'aria-current="page"':'')+'>'+icon(id)+'<span class="nav-label">'+label+'</span>'+(id==='plans'?'<span class="nav-count">'+state.tasks.filter(t=>!t.done&&t.date<=today()).length+'</span>':'')+'</button>').join('');
+ const n=activityCount(today()),goal=state.settings.dailyGoal;
+ $('side-goal').innerHTML='<div class="row between"><strong>Bugungi kichik maqsad</strong><span>🌱</span></div><p>'+n+' / '+goal+' ta bajarilgan ish</p><div class="progress-track"><i style="width:'+Math.min(100,n/goal*100)+'%"></i></div>';
+ $('top-streak').textContent='🔥 '+streaks().current+' kun';$('avatar').textContent=initials(state.settings.name);
+ document.querySelectorAll('[data-icon]').forEach(el=>{el.innerHTML=icon(el.dataset.icon);});
+ applyTheme();updateStorage();updateTimerUI();
+}
+function heading(title,desc,actions,eyebrow){
+ return '<div class="page-heading"><div>'+(eyebrow?'<div class="eyebrow">'+esc(eyebrow)+'</div>':'')+'<h1>'+esc(title)+'</h1><p>'+esc(desc)+'</p></div>'+(actions?'<div class="page-actions">'+actions+'</div>':'')+'</div>';
+}
+function tagHTML(tag){return tag?'<span class="tag"><span class="dot" style="color:'+categoryColor(tag)+'"></span>'+esc(tag)+'</span>':'';}
+function metric(label,value,caption,name,tone){return '<div class="card metric"><div class="metric-top"><span>'+esc(label)+'</span><span class="metric-icon"'+(tone?' style="background:var(--'+tone+'-bg);color:var(--'+tone+')"':'')+'>'+icon(name)+'</span></div><div class="metric-number">'+value+'</div><div class="metric-caption">'+esc(caption)+'</div></div>';}
+function emptyHTML(emoji,title,desc,action,label){return '<div class="empty"><div class="empty-icon">'+emoji+'</div><h3>'+esc(title)+'</h3><p>'+esc(desc)+'</p>'+(action?'<button class="btn soft" data-action="'+action+'">'+esc(label)+'</button>':'')+'</div>';}
+function render(focus=false){
+ flushJournal();const focused=document.activeElement,remember=focused&&focused.dataset&&focused.dataset.action?Object.assign({},focused.dataset):null;
+ updateShell();
+ const renderers={today:renderToday,plans:renderPlanner,habits:renderHabits,activity:renderActivity,focus:renderFocus,stats:renderStats,settings:renderSettings};
+ (renderers[view]||renderToday)();
+ updateTimerUI();
+ if(!focus&&remember&&!$('dialog').open){const same=Array.from(document.querySelectorAll('[data-action]')).find(el=>Object.entries(remember).every(([k,v])=>el.dataset[k]===v));if(same)same.focus({preventScroll:true});}
+ if(focus){const h=$('main').querySelector('h1');if(h){h.tabIndex=-1;h.focus({preventScroll:true});}window.scrollTo(0,0);}
+}
+function navigate(next){flushJournal();view=next;render(true);$('main').classList.remove('motion-enter');void $('main').offsetWidth;$('main').classList.add('motion-enter');}
+function taskRow(t,showDate=false){
+ return '<div class="task-row '+(t.done?'done':'')+'" draggable="'+(!t.done)+'" data-task-id="'+esc(t.id)+'"><button class="task-check" data-action="toggle-task" data-id="'+esc(t.id)+'" role="checkbox" aria-checked="'+t.done+'" aria-label="'+esc(t.title)+(t.done?' — qayta ochish':' — bajarilgan deb belgilash')+'"><span class="check-box" aria-hidden="true">'+(t.done?'✓':'')+'</span></button><div class="task-body"><button class="task-title" data-action="edit-task" data-id="'+esc(t.id)+'">'+esc(t.title)+'</button><div class="task-meta">'+tagHTML(t.tag)+'<span class="priority-'+t.priority+'">'+({high:'↑ Muhim',medium:'• Oddiy',low:'↓ Past'}[t.priority])+'</span>'+(t.time?'<span>◷ '+esc(t.time)+'</span>':'')+(t.estimate?'<span>'+t.estimate+' daq</span>':'')+(showDate?'<span class="'+(!t.done&&t.date<today()?'priority-high':'')+'">'+formatDate(t.date)+'</span>':'')+(t.repeat!=='none'?'<span title="Takrorlanuvchi reja">↻</span>':'')+'</div>'+(t.description?'<p class="task-description">'+esc(t.description)+'</p>':'')+'</div><button class="btn ghost square" data-action="edit-task" data-id="'+esc(t.id)+'" aria-label="'+esc(t.title)+' — tahrirlash">'+icon('edit')+'</button></div>';
+}
+function sortTasks(tasks){return tasks.slice().sort((a,b)=>Number(a.done)-Number(b.done)||({high:0,medium:1,low:2}[a.priority]-{high:0,medium:1,low:2}[b.priority])||(a.time||'99:99').localeCompare(b.time||'99:99')||a.createdAt-b.createdAt);}
+function weekDots(h){
+ const start=monday(today());
+ return '<div class="week-dots">'+Array.from({length:7},(_,i)=>{const d=addDays(start,i),done=habitDone(h,d),scheduled=h.days.includes(dateFrom(d).getDay());return '<span class="week-dot '+(done?'done ':'')+(d===today()?'current':'')+'" title="'+formatDate(d)+': '+(h.logs[d]||0)+' / '+h.target+'">'+(done?'✓':scheduled?WEEK[i]:'·')+'</span>';}).join('')+'</div>';
+}
+/* 05 · Today dashboard. Every number comes from the user's real data. */
+function renderToday(){
+ const day=today(),tasks=sortTasks(state.tasks.filter(t=>t.date===day)),done=tasks.filter(t=>t.done).length,habits=dueHabits(),hDone=habits.filter(h=>habitDone(h)).length,n=activityCount(day),goal=state.settings.dailyGoal,overdue=state.tasks.filter(t=>!t.done&&t.date<day),j=state.journal[day]||{mood:0,note:''};
+ const greeting=new Date().getHours()<12?'Xayrli tong':new Date().getHours()<18?'Xayrli kun':'Xayrli kech';
+ $('main').innerHTML=heading(greeting+(state.settings.name?', '+state.settings.name:'.'),'Bugungi kichik qadamlaringiz ertangi natijalarni yaratadi.','<span class="date-button">'+dayName(day)+', '+formatDate(day)+'</span><button class="btn primary" data-action="new-entry">'+icon('plus')+' Bajarilgan ishni yozish</button>','SIZNING KUNINGIZ, SIZNING RITMINGIZ')+
+ '<section class="welcome"><div class="welcome-copy"><div class="eyebrow">HAR BIR KICHIK QADAM HISOB</div><h2>'+(n>=goal?'Bugungi maqsadga yetdingiz. Shu ritmni qadrlang.':'Hammasini birdan emas. Muhimidan boshlang.')+'</h2><p>'+(n>=goal?'Siz bugun '+n+' ta ishni qayd etdingiz. Dam olishga ham vaqt ajrating.':'Bugun uchun '+goal+' ta kichik g‘alaba. Rejalashtiring, diqqatni jamlang, natijani qayd eting.')+'</p><div class="welcome-actions"><button class="btn" data-action="navigate" data-view="focus">'+icon('play')+' Fokusni boshlash</button></div></div><div class="hero-orbit" style="--angle:'+Math.min(360,n/goal*360)+'deg"><div>'+n+'<span>'+goal+' TA ISHDAN</span></div></div></section>'+
+ '<div class="metrics">'+metric('Bugungi rejalar',done+' <small>/ '+tasks.length+'</small>',tasks.length?Math.round(done/tasks.length*100)+'% bajarildi':'Birinchi rejangizni qo‘shing','plans')+metric('Diqqat uchun vaqt',focusMinutes()+' <small>daq</small>','Kunlik maqsad: '+state.settings.focusGoal+' daqiqa','focus')+metric('Kundalik odatlar',hDone+' <small>/ '+habits.length+'</small>',habits.length?'Bugunga belgilangan odatlar':'Sizga mos odatni tanlang','habits','green')+metric('Uzluksiz faollik',streaks().current+' <small>kun</small>','Eng yaxshi natija: '+streaks().best+' kun','activity','amber')+'</div>'+
+ '<div class="dashboard-grid"><div class="stack"><section class="card pad"><div class="card-head"><div><h3>Bugungi reja</h3><p>'+dayName(day)+' · '+formatDate(day)+'</p></div><button class="btn ghost square" data-action="new-task" aria-label="Bugungi reja qo‘shish">'+icon('plus')+'</button></div>'+
+ (overdue.length?'<div class="notice"><span>'+overdue.length+' ta reja oldingi kunlardan qolgan.</span><button class="btn ghost" data-action="move-overdue">Bugunga →</button></div>':'')+
+ '<div class="segment" aria-label="Vazifalarni filtrlash">'+[['all','Barchasi'],['open','Jarayonda'],['done','Bajarildi']].map(([id,label])=>'<button class="'+(taskFilter===id?'active':'')+'" data-action="task-filter" data-value="'+id+'">'+label+'</button>').join('')+'</div><div class="plan-list">'+
+ (tasks.filter(t=>taskFilter==='all'||(taskFilter==='done'?t.done:!t.done)).map(t=>taskRow(t)).join('')||emptyHTML('☀️',tasks.length?'Bu bo‘lim hozircha bo‘sh.':'Kun uchun joy oching.','Bitta aniq va bajarish mumkin bo‘lgan reja bilan boshlang.'))+
+ '</div><form class="quick-form" id="quick-task-form"><input name="title" id="quick-task-title" required maxlength="300" aria-label="Yangi reja nomi" placeholder="+ Bugun nima qilmoqchisiz?"><button class="btn soft" type="submit" aria-label="Rejani qo‘shish">'+icon('arrow')+'</button></form><div class="list-bottom"><span>'+done+' ta bajarildi · '+Math.max(0,tasks.length-done)+' ta qoldi</span><button class="text-link" data-action="navigate" data-view="plans">Barcha rejalar →</button></div></section>'+
+ '<section class="card pad"><div class="card-head"><div><h3>So‘nggi kichik g‘alabalar</h3><p>Qilgan ishlaringizni ko‘rish ham muhim.</p></div><button class="btn ghost square" data-action="new-entry" aria-label="Bajarilgan ishni qo‘shish">'+icon('plus')+'</button></div>'+renderRecent(entries().sort((a,b)=>b.date.localeCompare(a.date)||b.entry.createdAt-a.entry.createdAt).slice(0,4))+'<div class="list-bottom"><span>Harakat izsiz qolmaydi.</span><button class="text-link" data-action="navigate" data-view="activity">Faollik tarixi →</button></div></section>'+
+ '<section class="card pad"><div class="card-head"><div><h3>Shu haftadagi ritmingiz</h3><p>Bir tekis bo‘lishi shart emas. Davom etish kifoya.</p></div><span class="pill purple">7 kun</span></div>'+weekChart()+'</section></div>'+
+ '<div class="stack"><section class="card pad"><div class="card-head"><div><h3>Kundalik odatlar</h3><p>Kichik, lekin muntazam.</p></div><button class="btn ghost square" data-action="new-habit" aria-label="Yangi odat">'+icon('plus')+'</button></div>'+
+ (habits.length?habits.map(h=>'<div class="habit-mini"><span class="habit-symbol">'+esc(h.icon)+'</span><div class="grow"><h4>'+esc(h.title)+'</h4><p>'+(h.logs[day]||0)+' / '+h.target+' '+esc(h.unit)+'</p></div><button class="habit-add '+(habitDone(h)?'complete':'')+'" data-action="habit-plus" data-id="'+esc(h.id)+'" aria-label="'+esc(h.title)+' — '+(habitDone(h)?'bajarildi':'bir qadam qo‘shish')+'"'+(habitDone(h)?' disabled':'')+'>'+(habitDone(h)?'✓':'+')+'</button></div>').join(''):
+ '<p class="small muted">Qaysi odatni mustahkamlamoqchisiz?</p>'+habitSuggestions())+
+ '<div class="list-bottom"><span>'+hDone+' ta odat bajarildi</span><button class="text-link" data-action="navigate" data-view="habits">Odatlarim →</button></div></section>'+
+ '<section class="focus-mini"><div class="eyebrow">BIR PAYTDA BIR ISH</div><h3>Diqqatingizga joy bering.</h3><p>Telefonni chetga qo‘ying. Bitta ish tanlang. Qolganlari kutib turadi.</p><div class="mini-clock" id="home-timer">'+clock(timerRemaining())+'</div><button class="btn primary" data-action="navigate" data-view="focus">'+icon('play')+' '+(state.timer.status==='running'?'Seansga qaytish':'Fokus uchun vaqt')+'</button></section>'+
+ '<section class="card pad"><div class="card-head"><div><h3>O‘zingiz bilan bir daqiqa</h3><p>Bugun o‘zingizni qanday his qilyapsiz?</p></div></div><div class="mood-row">'+MOODS.map(m=>'<button class="mood-btn '+(j.mood===m.id?'active':'')+'" data-action="mood" data-mood="'+m.id+'" aria-label="'+m.label+'" aria-pressed="'+(j.mood===m.id)+'">'+m.emoji+'<span>'+m.label+'</span></button>').join('')+'</div><div class="journal-label"><label for="daily-note">Bugungi fikr yoki kichik g‘alaba</label><span class="muted" id="journal-status">Avtomatik saqlanadi</span></div><textarea class="journal-text" id="daily-note" maxlength="5000" data-date="'+day+'" placeholder="Bugun nimadan mamnun bo‘ldingiz?">'+esc(j.note)+'</textarea></section></div></div>';
+}
+function renderRecent(items){
+ return items.length?items.map(({date,entry:e})=>'<div class="recent-entry"><span class="entry-dot">'+icon(e.source==='task'?'check':e.source==='focus'?'focus':e.source==='habit'?'habits':'book')+'</span><div class="grow"><h4>'+esc(e.title)+'</h4><p>'+esc(e.tag||'Shaxsiy')+' · '+(date===today()?'Bugun':formatDate(date))+'</p></div><time>'+esc(e.time)+'</time></div>').join(''):emptyHTML('✨','Birinchi g‘alabangizni kutyapmiz.','Rejani bajaring yoki bugun qilgan ishingizni qo‘lda qayd eting.','new-entry','Bajarilgan ishni qo‘shish');
+}
+function weekChart(){
+ const start=monday(today()),values=Array.from({length:7},(_,i)=>activityCount(addDays(start,i))),max=Math.max(1,...values);
+ return '<div class="week-summary" role="img" aria-label="'+esc(values.map((n,i)=>WEEK_FULL[i]+': '+n+' ish').join('; '))+'">'+values.map((n,i)=>'<div class="mini-col '+(addDays(start,i)===today()?'today':'')+'"><span>'+n+'</span><i class="mini-bar" style="height:'+Math.max(3,n/max*75)+'px"></i><span>'+WEEK[i]+'</span></div>').join('')+'</div>';
+}
+const HABIT_TEMPLATES=[
+ {title:'Ingliz tilini mashq qilish',icon:'📚',tag:'Ingliz tili',target:1,unit:'mashg‘ulot'},
+ {title:'Kitob o‘qish',icon:'📖',tag:'O‘qish',target:20,unit:'sahifa'},
+ {title:'Jismoniy faollik',icon:'🏃',tag:'Sog‘liq',target:1,unit:'mashg‘ulot'}
+];
+function habitSuggestions(){return HABIT_TEMPLATES.map((h,i)=>'<button class="suggestion" data-action="habit-template" data-index="'+i+'"><span>'+h.icon+'</span><span>'+esc(h.title)+'</span>'+icon('plus')+'</button>').join('');}
+/* 06 · Planner: day/week/month/list, priority, recurrence and moving tasks. */
+function filteredTasks(){
+ const q=taskQuery.toLocaleLowerCase();
+ return sortTasks(state.tasks.filter(t=>(!q||(t.title+' '+t.description+' '+t.tag).toLocaleLowerCase().includes(q))&&(!taskTag||t.tag===taskTag)&&(taskFilter==='all'||(taskFilter==='done'?t.done:!t.done))));
+}
+function renderPlanner(){
+ const from=plannerMode==='month'?monthStart(selectedDate):monday(selectedDate),to=plannerMode==='month'?monthEnd(selectedDate):addDays(from,6),period=plannerMode==='month'?MONTHS[dateFrom(selectedDate).getMonth()]+' '+dateFrom(selectedDate).getFullYear():formatDate(from)+' — '+formatDate(to);
+ $('main').innerHTML=heading('Niyatni rejaga aylantiring.','Muhim ishlarni ajrating. Bajarilgan har bir ish faollik tarixiga yoziladi.','<button class="btn" data-action="move-overdue">↪ Qolganlarini bugunga</button><button class="btn primary" data-action="new-task" data-date="'+selectedDate+'">'+icon('plus')+' Yangi reja</button>','REJALAR & ROADMAP')+
+ '<div class="filterbar"><div class="search-field">'+icon('search')+'<input id="task-search" type="search" placeholder="Rejalarda qidirish…" aria-label="Rejalarda qidirish" value="'+esc(taskQuery)+'"></div><select id="task-category" aria-label="Kategoriya"><option value="">Barcha kategoriyalar</option>'+categories().map(c=>'<option'+(c===taskTag?' selected':'')+'>'+esc(c)+'</option>').join('')+'</select><select id="task-state-filter" aria-label="Reja holati">'+[['all','Barcha holatlar'],['open','Bajarilmagan'],['done','Bajarilgan']].map(([v,l])=>'<option value="'+v+'"'+(taskFilter===v?' selected':'')+'>'+l+'</option>').join('')+'</select></div>'+
+ '<div class="period-bar"><div class="row"><button class="btn square" data-action="period" data-delta="-1" aria-label="Oldingi davr">←</button><h3>'+period+'</h3><button class="btn square" data-action="period" data-delta="1" aria-label="Keyingi davr">→</button></div><div class="row wrap"><button class="btn" data-action="planner-today">Bugun</button><div class="segment">'+[['day','Kun'],['week','Hafta'],['month','Oy'],['list','Ro‘yxat']].map(([m,l])=>'<button class="'+(plannerMode===m?'active':'')+'" data-action="planner-mode" data-mode="'+m+'">'+l+'</button>').join('')+'</div></div></div>'+
+ (plannerMode==='day'?'<div class="date-strip">'+Array.from({length:7},(_,i)=>{const d=addDays(from,i);return '<button class="date-tile '+(d===selectedDate?'active':'')+'" data-action="select-date" data-date="'+d+'" data-drop-date="'+d+'" aria-label="'+formatDate(d,true)+'"><span>'+WEEK[i]+'</span><strong>'+Number(d.slice(8))+'</strong><i class="date-dot" style="opacity:'+(state.tasks.some(t=>t.date===d)?1:0)+'"></i></button>';}).join('')+'</div>':'')+'<div id="planner-results"></div>';
+ renderPlannerResults();
+}
+function plannerDay(date,tasks){
+ return '<section class="card planner-day" data-drop-date="'+date+'"><div class="planner-day-head"><div><h3 style="font-size:14px">'+(date===today()?'Bugun · ':'')+dayName(date)+'</h3><p class="small muted">'+formatDate(date,true)+'</p></div><div class="row"><span class="pill '+(date===today()?'purple':'')+'">'+tasks.filter(t=>t.done).length+' / '+tasks.length+'</span><button class="btn square ghost" data-action="new-task" data-date="'+date+'" aria-label="'+formatDate(date)+' uchun reja">'+icon('plus')+'</button></div></div><div class="planner-day-body">'+(tasks.length?tasks.map(t=>taskRow(t)).join(''):emptyHTML('☀️','Bu kun hali ochiq.','Aniq bir vazifa qo‘shing va kuningizga yo‘nalish bering.'))+'</div></section>';
+}
+function renderPlannerResults(){
+ if(!$('planner-results'))return;
+ const tasks=filteredTasks();
+ if(plannerMode==='day')$('planner-results').innerHTML=plannerDay(selectedDate,tasks.filter(t=>t.date===selectedDate));
+ else if(plannerMode==='week')$('planner-results').innerHTML=Array.from({length:7},(_,i)=>{const d=addDays(monday(selectedDate),i);return plannerDay(d,tasks.filter(t=>t.date===d));}).join('');
+ else if(plannerMode==='month'){
+  const start=monday(monthStart(selectedDate));
+  $('planner-results').innerHTML='<div class="card pad"><div class="calendar">'+WEEK.map(d=>'<div class="calendar-label">'+d+'</div>').join('')+Array.from({length:42},(_,i)=>{const d=addDays(start,i),list=tasks.filter(t=>t.date===d);return '<button class="calendar-day '+(d===today()?'today ':'')+(d.slice(0,7)!==selectedDate.slice(0,7)?'dim':'')+'" data-action="select-date" data-date="'+d+'" data-drop-date="'+d+'" aria-label="'+formatDate(d,true)+', '+list.length+' ta reja"><strong>'+Number(d.slice(8))+'</strong>'+list.slice(0,2).map(t=>'<span class="cal-task">'+(t.done?'✓ ':'')+esc(t.title)+'</span>').join('')+'<span class="cal-count">'+(list.length?list.filter(t=>t.done).length+' / '+list.length:'')+'</span></button>';}).join('')+'</div></div>';
+ }else{
+  const dates=Array.from(new Set(tasks.map(t=>t.date))).sort();
+  $('planner-results').innerHTML=dates.length?dates.map(d=>plannerDay(d,tasks.filter(t=>t.date===d))).join(''):'<div class="card">'+emptyHTML('📋','Reja topilmadi.','Qidiruvni o‘zgartiring yoki yangi reja qo‘shing.','new-task','Yangi reja')+'</div>';
+ }
+}
+/* 07 · Habits with numeric targets, selected weekdays and preserved history. */
+function renderHabits(){
+ const visible=state.habits.filter(h=>!h.archived),scheduled=dueHabits(),done=scheduled.filter(h=>habitDone(h)).length;
+ $('main').innerHTML=heading('Muntazamlikdan kuch oling.','O‘zingizga mos odatlar. Kichik maqsadlar. Har kuni bir qadam.','<button class="btn" data-action="archived-habits">Arxiv ('+state.habits.filter(h=>h.archived).length+')</button><button class="btn primary" data-action="new-habit">'+icon('plus')+' Yangi odat</button>','ODATLAR')+
+ '<div class="metrics">'+metric('Faol odatlar',visible.length,'O‘zingiz uchun tanlangan','habits')+metric('Bugungi natija',done+' <small>/ '+scheduled.length+'</small>','Faqat bugunga rejalashtirilgan','check','green')+metric('Eng uzun joriy seriya',Math.max(0,...visible.map(habitStreak))+' <small>marta</small>','Rejalashtirilgan kunlar bo‘yicha','activity','amber')+metric('Bugungi bajarilish',scheduled.length?Math.round(done/scheduled.length*100)+'%':'0%','Bir qadam ham o‘zgarish','stats')+'</div>'+
+ (visible.length?'<div class="habit-grid">'+visible.map(h=>{const scheduledToday=scheduled.includes(h),value=h.logs[today()]||0;return '<section class="card habit-card"><div class="row between"><span class="habit-symbol">'+esc(h.icon)+'</span><div class="row"><span class="pill '+(scheduledToday?'purple':'')+'">'+(scheduledToday?'Bugun':'Dam kuni')+'</span><button class="btn square ghost" data-action="edit-habit" data-id="'+esc(h.id)+'" aria-label="'+esc(h.title)+' — tahrirlash">'+icon('edit')+'</button></div></div><h3>'+esc(h.title)+'</h3><p class="tiny muted" style="margin-top:5px">'+esc(h.tag||'Shaxsiy odat')+' · '+h.days.length+' kun / hafta</p><div class="habit-quantity">'+value+' <small>/ '+h.target+' '+esc(h.unit)+'</small></div><div class="progress-track"><i style="background:'+h.color+';width:'+Math.min(100,value/h.target*100)+'%"></i></div><div class="habit-actions"><button class="btn square" data-action="habit-minus" data-id="'+esc(h.id)+'" aria-label="Bir qadam kamaytirish"'+(value<=0?' disabled':'')+'>−</button><button class="btn '+(value>=h.target?'soft':'primary')+'" data-action="habit-plus" data-id="'+esc(h.id)+'"'+(!scheduledToday||value>=h.target?' disabled':'')+'>'+(value>=h.target?'✓ Bajarildi':'+ Bir qadam')+'</button><button class="btn square" data-action="habit-log" data-id="'+esc(h.id)+'" aria-label="Odat tarixini tahrirlash">'+icon('today')+'</button></div>'+weekDots(h)+'<p class="tiny muted" style="margin-top:15px">🔥 '+habitStreak(h)+' marta ketma-ket</p></section>';}).join('')+'</div>':
+ '<div class="card pad" style="max-width:620px;margin:auto">'+emptyHTML('🌱','Qaysi odat bilan boshlaymiz?','Odatning kichigi bo‘lmaydi. Muhimi — siz uchun foydali bo‘lsin.')+habitSuggestions()+'</div>');
+}
+/* 08 · Activity heatmap and editable, searchable history. */
+function renderActivity(){
+ const yearItems=entries().filter(x=>x.date.startsWith(String(shownYear))),active=new Set(yearItems.map(x=>x.date)).size;
+ $('main').innerHTML=heading('Harakatlaringiz iz qoldiradi.','Yozuvlar, bajarilgan rejalar, odatlar va fokus — bir tarixda.','<button class="btn primary" data-action="new-entry">'+icon('plus')+' Ishni qayd etish</button>','FAOLLIK TARIXI')+
+ '<section class="card pad"><div class="card-head"><div><h3>'+shownYear+' yildagi kichik g‘alabalar</h3><p>'+yearItems.length+' ta qayd · '+active+' faol kun</p></div><div class="row"><button class="btn square" data-action="year" data-delta="-1" aria-label="Oldingi yil">←</button><strong>'+shownYear+'</strong><button class="btn square" data-action="year" data-delta="1" aria-label="Keyingi yil">→</button></div></div>'+heatmapHTML()+'<div class="row between wrap" style="margin-top:14px"><label class="row small muted" for="history-jump">Kun tafsiloti <input id="history-jump" type="date" style="width:155px" value="'+today()+'" aria-label="Faollik kunini tanlash"></label><span class="tiny muted">Katakni bosing · yo‘nalish tugmalari bilan harakatlaning</span></div></section>'+
+ '<div class="history-filters"><div class="search-field">'+icon('search')+'<input id="history-search" type="search" placeholder="Yozuv, tavsif yoki kategoriya…" aria-label="Faollik tarixida qidirish" value="'+esc(historyFilter.query)+'"></div><select id="history-category" aria-label="Kategoriya"><option value="">Barcha kategoriyalar</option>'+categories().map(c=>'<option'+(c===historyFilter.tag?' selected':'')+'>'+esc(c)+'</option>').join('')+'</select><input id="history-from" type="date" aria-label="Boshlanish sanasi" value="'+historyFilter.from+'"><input id="history-to" type="date" aria-label="Tugash sanasi" value="'+historyFilter.to+'"></div><div id="history-results"></div>';
+ renderHistory();
+}
+function heatmapHTML(){
+ const first=shownYear+'-01-01',start=monday(first),last=shownYear+'-12-31',end=addDays(monday(last),6),days=daysBetween(start,end);
+ const cells=days.map((d,i)=>{const n=activityCount(d),out=d.slice(0,4)!==String(shownYear),level=Math.min(4,n);return '<button class="heat-cell '+(level?'l'+level+' ':'')+(out?'outside ':'')+(d===today()?'current':'')+'" data-action="day-detail" data-date="'+d+'" data-heat-index="'+i+'" tabindex="'+((d===today()||(shownYear!==new Date().getFullYear()&&d===first))?'0':'-1')+'" aria-label="'+formatDate(d,true)+' — '+n+' ta ish" title="'+formatDate(d,true)+' · '+n+' ta ish"'+(out?' disabled':'')+'></button>';}).join('');
+ const labels=SHORT_MONTHS.map((m,i)=>{const d=shownYear+'-'+String(i+1).padStart(2,'0')+'-01',col=Math.floor((ordinal(d)-ordinal(start))/7);return '<span class="heat-label" style="left:'+(25+col*16)+'px">'+m+'</span>';}).join('');
+ return '<div class="heatmap-scroll"><div class="heatmap-shell">'+labels+'<div class="heat-weekday">'+WEEK.map((w,i)=>'<span>'+(i%2===0?w:'')+'</span>').join('')+'</div><div class="heatmap" aria-label="Yillik faollik kataklari">'+cells+'</div></div></div><div class="heat-legend"><span>Kamroq</span>'+['var(--line)','#C8BDFC','#A38CF0','#7B5FDE','#4F46E5'].map(c=>'<i style="background:'+c+'"></i>').join('')+'<span>Ko‘proq</span></div>';
+}
+function filteredEntries(){
+ const q=historyFilter.query.toLocaleLowerCase();
+ return entries().filter(({date,entry:e})=>(!historyFilter.from||date>=historyFilter.from)&&(!historyFilter.to||date<=historyFilter.to)&&(!historyFilter.tag||e.tag===historyFilter.tag)&&(!q||(e.title+' '+e.description+' '+e.tag).toLocaleLowerCase().includes(q))).sort((a,b)=>b.date.localeCompare(a.date)||b.entry.time.localeCompare(a.entry.time)||b.entry.createdAt-a.entry.createdAt);
+}
+function entryRow(date,e){
+ return '<div class="entry-row"><time class="entry-time">'+esc(e.time)+'</time><div class="grow"><h3>'+esc(e.title)+'</h3>'+(e.description?'<p>'+esc(e.description)+'</p>':'')+'<div class="row wrap" style="gap:7px;margin-top:7px">'+tagHTML(e.tag)+'<span class="pill">'+({manual:'Yozuv',task:'Reja',habit:'Odat',focus:'Fokus'}[e.source])+'</span>'+(e.duration?'<span class="tiny muted">'+e.duration+' daq</span>':'')+'</div></div><div class="row-actions"><button class="btn ghost square" data-action="edit-entry" data-id="'+esc(e.id)+'" aria-label="'+esc(e.title)+' — tahrirlash">'+icon('edit')+'</button><button class="btn ghost square" data-action="delete-entry" data-id="'+esc(e.id)+'" aria-label="'+esc(e.title)+' — o‘chirish">'+icon('trash')+'</button></div></div>';
+}
+function renderHistory(){
+ if(!$('history-results'))return;
+ const all=filteredEntries(),size=20;historyFilter.page=clamp(historyFilter.page,0,Math.max(0,Math.ceil(all.length/size)-1));
+ const shown=all.slice(historyFilter.page*size,(historyFilter.page+1)*size),dates=Array.from(new Set(shown.map(x=>x.date)));
+ $('history-results').innerHTML=all.length?dates.map(d=>'<section class="history-group"><div class="history-date">'+(d===today()?'Bugun · ':'')+formatDate(d,true)+' · '+dayName(d)+'</div><div class="card">'+shown.filter(x=>x.date===d).map(x=>entryRow(d,x.entry)).join('')+'</div></section>').join('')+'<div class="pagination"><span>'+all.length+' ta natija · '+(historyFilter.page*size+1)+'–'+Math.min(all.length,(historyFilter.page+1)*size)+'</span><div class="row"><button class="btn" aria-label="Oldingi sahifa" data-action="history-page" data-delta="-1"'+(historyFilter.page===0?' disabled':'')+'>←</button><button class="btn" aria-label="Keyingi sahifa" data-action="history-page" data-delta="1"'+((historyFilter.page+1)*size>=all.length?' disabled':'')+'>→</button></div></div>':'<div class="card">'+emptyHTML('🔎','Bu yerda hali yozuv yo‘q.','Qidiruvni yoki sana oralig‘ini o‘zgartiring, yoxud yangi ishni qayd eting.','new-entry','Ishni qayd etish')+'</div>';
+}
+/* 09 · Focus timer, based on deadlines so tab throttling does not lose time. */
+function timerRemaining(){const t=state.timer;return t.status==='running'?Math.min(t.duration,Math.max(0,Math.ceil((t.endAt-Date.now())/1000))):Math.max(0,t.remaining);}
+function timerModeMinutes(mode){return state.settings[mode==='short'?'shortMinutes':mode==='long'?'longMinutes':'focusMinutes'];}
+function setTimerMode(mode){
+ if(!['focus','short','long'].includes(mode))return;
+ if(state.timer.status==='running'||state.timer.status==='paused'){toast('Avval joriy seansni yakunlang yoki bekor qiling.');return;}
+ state.timer=Object.assign(defaultTimer(),{mode,duration:timerModeMinutes(mode)*60,remaining:timerModeMinutes(mode)*60,taskId:state.timer.taskId});saveState();render();
+}
+function toggleTimer(){
+ flushJournal();const t=state.timer;
+ if(t.status==='running'){t.remaining=timerRemaining();t.status='paused';t.endAt=0;if(t.remaining===0){completeTimer();return;}}
+ else{if(t.status==='idle'||t.status==='complete'){t.duration=timerModeMinutes(t.mode)*60;t.remaining=t.duration;t.runId=uid();t.startedAt=Date.now();}t.status='running';t.endAt=Date.now()+t.remaining*1000;}
+ undoRecord=null;saveState();render();announce(t.status==='running'?'Taymer boshlandi.':'Taymer pauzada.');
+}
+function recordFocus(t,minutes,completedAt,partial){
+ if(t.mode!=='focus'||minutes<=0||state.focusSessions.some(s=>s.id===t.runId))return;
+ const task=findTask(t.taskId),date=dateKey(new Date(completedAt)),title=task?task.title:'Diqqat bilan ishlash';
+ state.focusSessions.push({id:t.runId,date,minutes:Math.round(minutes*10)/10,title,taskId:t.taskId,completedAt,partial});
+ addActivity(date,{title:'Fokus: '+title,description:(partial?'Qisman yakunlangan seans.':'Fokus seansi yakunlandi.'),tag:task?task.tag:'Fokus',source:'focus',sessionId:t.runId,duration:Math.round(minutes),time:timeText(completedAt),createdAt:completedAt});
+}
+function completeTimer(partial=false){
+ const t=state.timer;if(t.status==='complete'||t.status==='idle')return;
+ const remaining=timerRemaining(),spent=t.duration-remaining,completedAt=partial?Date.now():(t.endAt||Date.now());
+ if(partial&&spent<60){toast('Bir daqiqadan kam seans uchun Bekor qilish tugmasidan foydalaning.');return;}
+ commit(()=>{recordFocus(t,partial?spent/60:t.duration/60,completedAt,partial);t.status='complete';t.remaining=0;t.endAt=0;},t.mode==='focus'?'Fokus seansi saqlandi. Endi qisqa tanaffus.':'Tanaffus tugadi. Yangi qadamga tayyormisiz?',false);
+ beep();announce('Taymer yakunlandi.');
+}
+function discardTimer(){
+ commit(()=>{const mode=state.timer.mode,taskId=state.timer.taskId;state.timer=Object.assign(defaultTimer(),{mode,taskId,duration:timerModeMinutes(mode)*60,remaining:timerModeMinutes(mode)*60});},'Taymer qayta tayyorlandi.');
+}
+function updateTimerUI(){
+ const t=state.timer,remaining=timerRemaining(),caption=t.status==='running'?'Diqqatingiz hozir shu yerda.':t.status==='paused'?'Pauza. Tayyor bo‘lsangiz, davom eting.':t.status==='complete'?'Seans yakunlandi. Yaxshi ishladingiz.':'Bir ish. Bir seans. Bir qadam.';
+ if($('timer-clock'))$('timer-clock').textContent=clock(remaining);
+ if($('timer-caption'))$('timer-caption').textContent=caption;
+ if($('timer-dial'))$('timer-dial').style.setProperty('--angle',(1-remaining/Math.max(1,t.duration))*360+'deg');
+ if($('home-timer'))$('home-timer').textContent=clock(remaining);
+ const show=view!=='focus'&&['running','paused'].includes(t.status);$('timer-dock').hidden=!show;
+ if(show){
+  const dock=$('timer-dock'),stamp=t.mode+':'+t.status;
+  if(dock.dataset.stamp!==stamp){dock.dataset.stamp=stamp;dock.innerHTML='<button class="btn ghost" data-action="navigate" data-view="focus">'+icon('focus')+'<span><strong id="dock-clock"></strong><small>'+(t.status==='paused'?'Seans pauzada':t.mode==='focus'?'Fokus davom etmoqda':'Tanaffus davom etmoqda')+'</small></span></button><button class="btn soft square" data-action="timer-toggle" aria-label="'+(t.status==='running'?'Pauza':'Davom etish')+'">'+icon(t.status==='running'?'pause':'play')+'</button>';}
+  if($('dock-clock'))$('dock-clock').textContent=clock(remaining);
+ }
+ document.title=(t.status==='running'?clock(remaining)+' · ':'')+'Dayloom · Daily Tracker';
+}
+function tick(){
+ if(state.timer.status==='running'&&timerRemaining()<=0){completeTimer();return;}
+ updateTimerUI();
+ if(lastDay!==today()){flushJournal();lastDay=today();selectedDate=today();if(!$('dialog').open)render();}
+}
+function renderFocus(){
+ const t=state.timer,sessions=state.focusSessions.filter(f=>f.date===today()),total=focusMinutes();
+ $('main').innerHTML=heading('Diqqatingiz — eng yaxshi sarmoya.','Bitta muhim ishga vaqt ajrating. Taymer boshqa bo‘limlarda ham davom etadi.','<span class="pill purple">'+sessions.length+' ta seans bugun</span>','FOKUS MAKONI')+
+ '<div class="focus-layout"><section class="card focus-room"><div class="segment">'+[['focus','Fokus'],['short','Qisqa tanaffus'],['long','Uzun tanaffus']].map(([id,l])=>'<button data-action="timer-mode" data-mode="'+id+'" class="'+(t.mode===id?'active':'')+'">'+l+'</button>').join('')+'</div><div class="timer-dial" id="timer-dial" style="--angle:0deg"><div class="timer-center"><div class="eyebrow" style="margin-bottom:13px">'+(t.mode==='focus'?'SHU LAHZA, SHU ISH':'NAFAS ROSTLANG')+'</div><div class="timer-clock" id="timer-clock">'+clock(timerRemaining())+'</div><p class="timer-caption" id="timer-caption"></p></div></div><div class="timer-actions"><button class="btn primary" data-action="timer-toggle">'+icon(t.status==='running'?'pause':'play')+' '+(t.status==='running'?'Pauza':t.status==='paused'?'Davom etish':t.status==='complete'?'Yangi seans':'Boshlash')+'</button><button class="btn square" data-action="timer-discard" aria-label="Taymerni qayta boshlash">↻</button></div>'+
+ (['running','paused'].includes(t.status)?'<button class="text-link" data-action="timer-finish">Hozirgacha ishlangan vaqtni saqlash</button>':'')+
+ (t.status==='complete'&&t.mode==='focus'?'<div class="row wrap" style="justify-content:center"><button class="btn soft" data-action="timer-mode" data-mode="'+(sessions.length&&sessions.length%4===0?'long':'short')+'">Tanaffusga o‘tish →</button></div>':'')+
+ '<div class="focus-task"><label for="focus-task">Qaysi ishga diqqat qaratasiz?</label><select id="focus-task"'+(['running','paused'].includes(t.status)?' disabled':'')+'><option value="">Erkin fokus seansi</option>'+state.tasks.filter(x=>!x.done||x.id===t.taskId).map(x=>'<option value="'+esc(x.id)+'"'+(x.id===t.taskId?' selected':'')+'>'+esc(x.title)+'</option>').join('')+'</select></div><p class="tiny muted" style="margin-top:22px"><kbd class="kbd">Space</kbd> boshlash / pauza · Qurilma vaqti asosida ishlaydi.</p></section>'+
+ '<div class="stack"><section class="card pad"><div class="card-head"><div><h3>Bugungi diqqat</h3><p>Vaqtni sanashdan ko‘ra, unga ma’no bering.</p></div>'+icon('focus')+'</div><div class="metric-number">'+total+' <small>/ '+state.settings.focusGoal+' daqiqa</small></div><div class="progress-track" style="margin-top:17px"><i style="width:'+Math.min(100,total/state.settings.focusGoal*100)+'%"></i></div><p class="tiny muted" style="margin-top:12px">'+(total>=state.settings.focusGoal?'Kunlik fokus maqsadi bajarildi.':Math.max(0,state.settings.focusGoal-total)+' daqiqa qoldi.')+'</p></section><section class="card pad"><h3>So‘nggi seanslar</h3>'+
+ (state.focusSessions.length?state.focusSessions.slice(-5).reverse().map(f=>'<div class="session-row"><span class="entry-dot">'+icon('focus')+'</span><div class="grow"><strong>'+esc(f.title)+'</strong><p>'+formatDate(f.date)+' · '+timeText(f.completedAt)+(f.partial?' · qisman':'')+'</p></div><span class="session-min">'+f.minutes+' <small>daq</small></span></div>').join(''):emptyHTML('🎯','Hali birinchi seans oldinda.','Taymerni boshlang. Yakunlangan seanslar bu yerda ko‘rinadi.'))+
+ '</section><section class="breathing-note"><span style="font-size:25px">🌿</span><h3>Dam olish ham rejaning bir qismi.</h3><p>Yelkalarni bo‘shating, ekrandan uzoqqa qarang. Har to‘rt fokus seansidan so‘ng uzunroq tanaffus qiling.</p></section></div></div>';
+}
+/* 10 · Statistics: one selected month, consistent date ranges, real achievements. */
+function renderStats(){
+ const list=monthEntries(),first=statsMonth+'-01',last=monthEnd(first),days=daysBetween(first,last),prev=addMonths(first,-1).slice(0,7),previous=monthEntries(prev),active=new Set(list.map(x=>x.date)).size,cats=categoryStats(list),focus=state.focusSessions.filter(f=>f.date.startsWith(statsMonth)).reduce((n,f)=>n+f.minutes,0),growth=previous.length?Math.round((list.length-previous.length)/previous.length*100):null;
+ const monthlySeries=Array.from({length:12},(_,i)=>{const k=first.slice(0,4)+'-'+String(i+1).padStart(2,'0');return monthEntries(k).length;}),max=Math.max(1,...monthlySeries);
+ const moodEntries=Object.entries(state.journal).filter(([d,j])=>d.startsWith(statsMonth)&&j.mood),averageMood=moodEntries.length?moodEntries.reduce((n,[,j])=>n+j.mood,0)/moodEntries.length:0;
+ const validPastDays=days.filter(d=>d<=today()).length,consistency=validPastDays?Math.round(active/validPastDays*100):0;
+ let cursor=0;const segments=cats.map(c=>{const start=cursor;cursor+=c.count/Math.max(1,list.length)*360;return categoryColor(c.tag)+' '+start+'deg '+cursor+'deg';});
+ $('main').innerHTML=heading('O‘sishni ko‘rish yoqimli.','Haqiqiy raqamlar. Kichik g‘alabalar. Keyingi qadam uchun yo‘nalish.','<input type="month" id="stats-month" value="'+statsMonth+'" aria-label="Hisobot oyi" style="width:177px">','STATISTIKA & YUTUQLAR')+
+ '<div class="metrics">'+metric('Bajarilgan ishlar',list.length,growth===null?(list.length?'Birinchi natijalar':'Bu oyda hali qayd yo‘q'):(growth>=0?'+':'')+growth+'% oldingi oyga nisbatan','check')+metric('Faol kunlar',active+' <small>kun</small>',consistency+'% o‘tgan kunlarda faollik','today','green')+metric('Fokus vaqti',Math.round(focus)+' <small>daq</small>',state.focusSessions.filter(f=>f.date.startsWith(statsMonth)).length+' ta fokus seansi','focus')+metric('Eng uzun faollik',streaks().best+' <small>kun</small>','Barcha vaqtlar bo‘yicha rekord','activity','amber')+'</div>'+
+ '<div class="stats-grid"><section class="card pad"><div class="card-head"><div><h3>Yil davomida o‘sish</h3><p>'+first.slice(0,4)+' yil · oylar bo‘yicha bajarilgan ishlar</p></div><span class="pill">'+first.slice(0,4)+'</span></div><div class="chart" role="img" aria-label="'+esc(monthlySeries.map((n,i)=>MONTHS[i]+': '+n+' ish').join('; '))+'">'+monthlySeries.map((n,i)=>'<div class="chart-col"><b>'+n+'</b><i style="height:'+Math.max(3,n/max*150)+'px"></i><span>'+SHORT_MONTHS[i]+'</span></div>').join('')+'</div><div class="stats-insight">'+(list.length?'Bu oy '+active+' kun faol bo‘ldingiz. Faol kunlarda o‘rtacha '+(list.length/Math.max(1,active)).toFixed(1)+' ta ish.':'Statistika sizning birinchi harakatingizdan boshlanadi. Bugun bitta ishni qayd eting.')+'</div></section>'+
+ '<section class="card pad"><h3>Vaqt va e’tibor yo‘nalishlari</h3><p class="tiny muted" style="margin-top:5px">Tanlangan oydagi bajarilgan ishlar soni bo‘yicha.</p><div class="donut" style="background:conic-gradient('+(segments.length?segments.join(','):'var(--line) 0deg 360deg')+')"><div>'+list.length+'<small>JAMI ISH</small></div></div>'+
+ (cats.length?cats.slice(0,6).map(c=>'<div class="legend-row"><span class="dot" style="color:'+categoryColor(c.tag)+'"></span><span>'+esc(c.tag)+'</span><b>'+Math.round(c.count/list.length*100)+'%</b></div>').join(''):'<p class="small muted" style="text-align:center">Kategoriyalar yozuvlar bilan paydo bo‘ladi.</p>')+'</section>'+
+ '<section class="card pad"><div class="card-head"><div><h3>Kategoriyalar bo‘yicha</h3><p>'+MONTHS[Number(statsMonth.slice(5))-1]+' '+statsMonth.slice(0,4)+'</p></div></div><table class="category-table"><thead><tr><th>Kategoriya</th><th>Ishlar</th><th>Oxirgi faollik</th></tr></thead><tbody>'+(cats.length?cats.map(c=>'<tr><td>'+tagHTML(c.tag)+'</td><td>'+c.count+'</td><td>'+formatDate(c.last)+'</td></tr>').join(''):'<tr><td colspan="3">Hali ma’lumot yo‘q.</td></tr>')+'</tbody></table></section>'+
+ '<section class="card pad"><h3>Ritmingiz va holatingiz</h3><div class="mood-summary" style="margin-top:18px"><span class="emoji">'+(averageMood?MOODS[Math.max(0,Math.round(averageMood)-1)].emoji:'🌤️')+'</span><div><strong>'+(averageMood?averageMood.toFixed(1)+' / 5':'Hali belgilanmagan')+'</strong><p class="tiny muted">'+moodEntries.length+' kunlik kayfiyat qaydi</p></div></div><div style="margin-top:20px"><div class="row between"><span class="small">Oylik maqsad</span><strong class="small">'+list.length+' / '+state.settings.monthlyGoal+'</strong></div><div class="progress-track" style="margin-top:10px"><i style="width:'+Math.min(100,list.length/state.settings.monthlyGoal*100)+'%"></i></div><p class="tiny muted" style="margin-top:11px">Sizga mos maqsadni Sozlamalarda o‘zgartiring.</p></div></section></div>'+
+ '<section class="card pad" style="margin-top:22px"><div class="card-head"><div><h3>Harakatlaringizning kichik nishonlari</h3><p>Qayd etilgan yutuqlar tarixda saqlanadi.</p></div><span class="pill purple">'+ACHIEVEMENTS.filter(a=>state.achievements.some(x=>x.id===a.id)).length+' / '+ACHIEVEMENTS.length+'</span></div><div class="achievement-grid">'+ACHIEVEMENTS.map(a=>{const got=state.achievements.find(x=>x.id===a.id);return '<article class="achievement '+(got?'unlocked':'locked')+'" title="'+(got?'Ochildi: '+formatDate(got.unlockedAt,true):'Hali ochilmagan')+'"><span class="achievement-emoji">'+a.icon+'</span><h4>'+a.name+'</h4><p>'+a.desc+'</p>'+(got?'<span class="tiny" style="color:var(--primary)">✓ Erishildi</span>':'')+'</article>';}).join('')+'</div></section>';
+}
+/* 11 · Preferences, storage and backup controls. */
+function renderSettings(){
+ const s=state.settings;
+ const setting=(label,help,control)=>{const match=control.match(/name="([^"]+)"/),id=match?'pref-'+match[1]:'';return '<div class="settings-row"><div><label'+(id?' for="'+id+'"':'')+'>'+label+'</label><p>'+help+'</p></div>'+control.replace(/<(input|select) /,'<$1 '+(id?'id="'+id+'" ':''))+'</div>';};
+ const settingLabels={dailyGoal:'Kunlik maqsad',monthlyGoal:'Oylik maqsad',focusGoal:'Kunlik fokus',focusMinutes:'Fokus seansi',shortMinutes:'Qisqa tanaffus',longMinutes:'Uzun tanaffus'};
+ const number=(key,min,max)=>'<input type="number" name="'+key+'" aria-label="'+settingLabels[key]+'" min="'+min+'" max="'+max+'" value="'+s[key]+'" required>';
+ $('main').innerHTML=heading('Sizning ritmingiz, sizning qoidalaringiz.','Maqsadlar, qulayliklar va ma’lumotlaringiz — hammasi nazoratingizda.','','SOZLAMALAR')+
+ '<div class="settings-grid"><div><form id="settings-form" class="card setting-section"><div class="card-head"><div><h3>Shaxsiy makon</h3><p>Kichik, amalga oshirish mumkin bo‘lgan maqsadlardan boshlang.</p></div>'+icon('settings')+'</div>'+
+ '<label class="field">Sizni qanday chaqiraylik?<input name="name" value="'+esc(s.name)+'" maxlength="60" placeholder="Ismingiz"></label>'+
+ setting('Kunlik maqsad','Kun davomida bajarilgan ishlar soni.',number('dailyGoal',1,100))+
+ setting('Oylik maqsad','Bir oy uchun jami bajarilgan ishlar.',number('monthlyGoal',1,5000))+
+ setting('Kunlik fokus','Diqqat bilan ishlash uchun daqiqalar.',number('focusGoal',1,720))+
+ setting('Rang rejimi','Yorug‘, tungi yoki qurilmaga mos.', '<select name="theme" aria-label="Rang rejimi">'+[['system','Tizimga mos'],['light','Yorug‘'],['dark','Tungi']].map(([v,l])=>'<option value="'+v+'"'+(s.theme===v?' selected':'')+'>'+l+'</option>').join('')+'</select>')+
+ setting('Yumshoq ovoz','Ish bajarilganda va taymer tugaganda.','<input type="checkbox" name="sound" aria-label="Ovoz"'+(s.sound?' checked':'')+'>')+
+ setting('Kamroq harakat','Animatsiyalarni o‘chiradi. Qurilma sozlamasi ham hurmat qilinadi.','<input type="checkbox" name="reduceMotion" aria-label="Animatsiyalarni kamaytirish"'+(s.reduceMotion?' checked':'')+'>')+
+ '<h3 style="margin-top:25px">Fokus ritmi</h3>'+
+ setting('Fokus seansi','Daqiqalarda. Joriy seans o‘zgarmaydi.',number('focusMinutes',1,180))+
+ setting('Qisqa tanaffus','Fokusdan so‘ng nafas rostlash.',number('shortMinutes',1,60))+
+ setting('Uzun tanaffus','Har to‘rt fokus seansidan so‘ng tavsiya.',number('longMinutes',1,120))+
+ '<div class="dialog-actions"><button class="btn primary" type="submit">'+icon('check')+' Saqlash</button></div></form>'+
+ '<section class="card setting-section"><h3>Kategoriya ranglari</h3><p class="tiny muted" style="margin-top:6px">Yangi kategoriya nomini reja yoki yozuv qo‘shayotganda kiriting.</p><div class="category-colors">'+categories().map(c=>'<label class="category-color"><span>'+esc(c)+'</span><input type="color" data-color-tag="'+esc(c)+'" value="'+categoryColor(c)+'" aria-label="'+esc(c)+' rangi"></label>').join('')+'</div></section></div>'+
+ '<div><section class="card setting-section"><div class="card-head"><div><h3>Ma’lumotlar siz bilan</h3><p>Zaxira nusxa olishni yaxshi odatga aylantiring.</p></div>'+icon('shield')+'</div><div class="row wrap"><span class="pill purple">'+entries().length+' yozuv</span><span class="pill">'+state.tasks.length+' reja</span><span class="pill">'+state.habits.length+' odat</span></div>'+
+ '<div class="backup-actions"><button class="btn" data-action="export">'+icon('download')+' JSON zaxira</button><button class="btn" data-action="import">'+icon('upload')+' Import qilish</button><button class="btn soft full" data-action="encrypted-export">'+icon('lock')+' Parolli zaxira nusxa</button></div>'+
+ '<p class="form-help">Oddiy va eski parolli Daily Tracker JSON fayllarini import qilish mumkin. Importdan oldin tarkibi ko‘rsatiladi. Birlashtirish mavjud yozuvlarni saqlaydi; tiklash esa joriy nusxani almashtiradi.</p>'+
+ (rawRecovery?'<div class="notice"><p>O‘qilmagan asl nusxa himoyalangan.</p><button class="btn" data-action="export-recovery">Asl nusxani yuklash</button></div>':'')+
+ '<p class="tiny muted">Ilova yoki brauzer ichidagi nusxa parolsiz saqlanadi. Parolli eksport va ulangan fayl AES-GCM bilan shifrlanadi. Parol serverga yuborilmaydi va saqlab qolinmaydi.</p></section>'+
+ '<section class="card setting-section linked-file-section"><h3>Faylga avtomatik zaxira</h3><p class="tiny muted" style="margin-top:8px">Chrome va mos brauzerlarda bitta parolli JSON faylga o‘zgarishlarni yozib boring. Har ochganda uni qayta ulang.</p>'+
+ '<div class="file-status" id="file-status">'+fileStatusHTML()+'</div><div class="backup-actions" id="file-actions">'+fileActionsHTML()+'</div>'+
+ '<p class="tiny muted" style="margin-top:14px">Safari uchun yuqoridagi JSON yoki parolli zaxira tugmalari ishlaydi. Qurilma nusxasi faylga yozish muvaffaqiyatsiz bo‘lsa ham saqlanadi.</p></section>'+
+ '<section class="card setting-section"><h3>Tezkor tugmalar</h3><div class="shortcuts">'+[['Qidirish','/'],['Yangi reja','N'],['Ishni qayd etish','A'],['Fokus bo‘limi','F'],['Fokusni boshlash / pauza','Space'],['Oynani yopish','Esc']].map(([l,k])=>'<div><span>'+l+'</span><kbd class="kbd">'+k+'</kbd></div>').join('')+'</div><p class="tiny muted" style="margin-top:15px">Tugmalar matn yozayotganingizda ishlamaydi. Faollik xaritasida yo‘nalish tugmalaridan foydalaning.</p></section>'+
+ '<section class="card setting-section"><h3>Offline, xotirjam</h3><p class="tiny muted" style="margin-top:8px">Asosiy dastur bitta HTML faylda. Internet bo‘lmasa ham reja, odat, qayd va taymer ishlaydi. Ilova yoki brauzer ma’lumotlarini tozalashdan oldin zaxira oling.</p><div class="row wrap" style="margin-top:16px"><button class="btn" data-action="persist">'+icon('shield')+' Xotirani himoyalash</button>'+(installPrompt?'<button class="btn primary" data-action="install">Ilovani o‘rnatish</button>':'')+'</div><p class="tiny muted" id="persistence-status" style="margin-top:9px"></p></section></div></div>';
+}
+function fileStatusHTML(){return link?'<strong>'+esc(link.handle.name)+'</strong><span>'+(link.error?esc(link.error):linkBusy?'Yozilmoqda…':link.saved?'Oxirgi zaxira: '+timeText(link.saved):'Ulandi. O‘zgarishlar avtomatik saqlanadi.')+'</span>':'<strong>Hozir fayl ulanmagan</strong><span>'+(window.showOpenFilePicker?'Mavjud faylni ulang yoki yangisini yarating.':'Bu brauzerda oddiy yuklab olish orqali zaxira oling.')+'</span>';}
+function fileActionsHTML(){return link?'<button class="btn" data-action="file-save">Hozir yozish</button><button class="btn" data-action="file-disconnect">Uzish</button><button class="btn soft full" data-action="file-password">Parolni almashtirish</button>':window.showOpenFilePicker?'<button class="btn" data-action="file-open">'+icon('folder')+' Faylni ulash</button><button class="btn" data-action="file-new">'+icon('plus')+' Yangi fayl</button>':'<span class="tiny muted full">Faylga avtomatik yozish bu brauzerda mavjud emas.</span>';}
+function refreshFileStatus(){if($('file-status'))$('file-status').innerHTML=fileStatusHTML();if($('file-actions'))$('file-actions').innerHTML=fileActionsHTML();}
+
+/* 12 · Native dialogs, editable records and daily reflection. */
+function openDialog(title,body){
+ flushJournal();const d=$('dialog');if(!d.open)modalReturn=document.activeElement;
+ d.innerHTML='<div class="dialog-head"><h2 id="dialog-title">'+esc(title)+'</h2><button class="btn ghost square" data-action="close-dialog" aria-label="Oynani yopish">✕</button></div><div class="dialog-body">'+body+'</div>';
+ if(!d.open)d.showModal();const first=d.querySelector('[autofocus]')||d.querySelector('button');if(first)first.focus();
+}
+function closeDialog(){const d=$('dialog');if(d.open)d.close();passwordJob=null;const el=modalReturn;if(el&&el.isConnected)el.focus();}
+function formError(message){const el=$('form-error');if(el){el.textContent=message;el.setAttribute('role','alert');}else toast(message);}
+function formEnd(label='Saqlash',extra=''){return '<div class="form-error" id="form-error" aria-live="polite"></div><div class="dialog-actions">'+extra+'<button type="button" class="btn" data-action="close-dialog">Bekor qilish</button><button type="submit" class="btn primary">'+label+'</button></div>';}
+function categoryField(value){return '<label class="field">Kategoriya<input name="tag" list="category-options" value="'+esc(value)+'" maxlength="80" placeholder="Masalan, Ingliz tili"><datalist id="category-options">'+categories().map(c=>'<option value="'+esc(c)+'"></option>').join('')+'</datalist></label>';}
+function openTask(id='',date=selectedDate){
+ const t=id?findTask(id):null;if(id&&!t)return;
+ const x=t||{title:'',description:'',date:validDate(date)?date:today(),tag:'',priority:'medium',time:'',estimate:25,repeat:'none'};
+ openDialog(t?'Rejani tahrirlash':'Yangi kichik qadam','<p class="dialog-intro">Nimani, qachon va nima uchun qilishingizni belgilang.</p><form id="task-form" data-id="'+esc(id)+'"><div class="form-grid"><label class="field full">Reja nomi<input name="title" required maxlength="300" value="'+esc(x.title)+'" autofocus placeholder="Masalan, 20 ta yangi so‘z o‘rganish"></label><label class="field">Sana<input name="date" type="date" min="1900-01-01" max="2200-12-31" value="'+x.date+'" required></label><label class="field">Vaqt <small>Ixtiyoriy</small><input name="time" type="time" value="'+esc(x.time)+'"></label>'+categoryField(x.tag)+
+ '<label class="field">Muhimlik<select name="priority">'+[['high','Yuqori'],['medium','O‘rta'],['low','Past']].map(([v,l])=>'<option value="'+v+'"'+(v===x.priority?' selected':'')+'>'+l+'</option>').join('')+'</select></label><label class="field">Taxminiy vaqt (daq)<input type="number" name="estimate" min="0" max="1440" value="'+x.estimate+'"></label><label class="field">Takrorlash<select name="repeat">'+[['none','Bir martalik'],['daily','Har kuni'],['weekdays','Ish kunlari'],['weekly','Har hafta'],['monthly','Har oy']].map(([v,l])=>'<option value="'+v+'"'+(x.repeat===v?' selected':'')+'>'+l+'</option>').join('')+'</select></label><label class="field full">Izoh<textarea name="description" maxlength="3000" placeholder="Keyingi qadamni aniq yozing…">'+esc(x.description)+'</textarea></label></div><p class="form-help">Takroriy reja bajarilganda keyingi sana yaratiladi. Tahrir faqat shu rejaga tegishli. Bajarish katagi faollik tarixiga alohida yozuv qo‘shadi.</p>'+formEnd('Saqlash',t?'<button type="button" class="btn danger" data-action="delete-task" data-id="'+esc(t.id)+'">O‘chirish</button>':'')+'</form>');
+}
+function saveTask(form){
+ const fd=new FormData(form),id=form.dataset.id,old=findTask(id);
+ const values={title:trim(fd.get('title'),300),description:trim(fd.get('description'),3000),date:fd.get('date'),time:fd.get('time'),tag:trim(fd.get('tag'),80),priority:fd.get('priority'),estimate:fd.get('estimate'),repeat:fd.get('repeat')};
+ if(!values.title||!validDate(values.date)){formError('Reja nomi va haqiqiy sanani kiriting.');return;}
+ const t=normalizeTask(Object.assign({},old||{id:uid()},values,{updatedAt:Date.now(),repeatAnchor:Number(values.date.slice(8))}),values.date);
+ if(old&&old.repeat!==t.repeat)t.seriesId='';
+ commit(()=>{if(old)state.tasks[state.tasks.indexOf(old)]=t;else state.tasks.push(t);},old?'Reja yangilandi.':'Yangi reja qo‘shildi.',true);closeDialog();
+}
+function openEntry(id='',date=today()){
+ const found=id?findEntry(id):null;if(id&&!found)return;
+ const e=found?found.entry:{title:'',description:'',tag:'',time:timeText(),duration:0,source:'manual'},d=found?found.date:date;
+ const linked=e.source!=='manual';
+ openDialog(found?'Yozuvni tahrirlash':'Bugungi g‘alabangizni qayd eting','<p class="dialog-intro">Kichik bo‘lsa ham, bajarilgan ishni e’tirof eting.</p><form id="entry-form" data-id="'+esc(id)+'"><div class="form-grid"><label class="field full">Nima qildingiz?<input name="title" value="'+esc(e.title)+'" maxlength="300" required autofocus placeholder="Masalan, bir bob kitob o‘qidim"></label><label class="field">Sana<input type="date" name="date" min="1900-01-01" max="'+today()+'" value="'+d+'" required'+(linked?' readonly':'')+'></label><label class="field">Vaqt<input type="time" name="time" value="'+esc(e.time)+'" required></label>'+categoryField(e.tag)+'<label class="field">Sarflangan vaqt (daq)<input type="number" name="duration" min="0" max="1440" value="'+e.duration+'"'+(e.source==='focus'?' readonly':'')+'></label><label class="field full">Izoh<textarea name="description" maxlength="5000" placeholder="Nima o‘rgandingiz? Nima yaxshi chiqdi?">'+esc(e.description)+'</textarea></label></div>'+(linked?'<p class="form-help">Bu yozuv '+({task:'rejaga',habit:'odatga',focus:'fokus seansiga'}[e.source])+' bog‘langan. Sanasi shu yerda o‘zgarmaydi.</p>':'')+formEnd()+'</form>');
+}
+function saveEntry(form){
+ const fd=new FormData(form),found=findEntry(form.dataset.id),d=found&&found.entry.source!=='manual'?found.date:fd.get('date');
+ const title=trim(fd.get('title'),300);if(!title||!validDate(d)||d>today()){formError('Sarlavha va bugundan kech bo‘lmagan sanani kiriting.');return;}
+ const values={title,description:trim(fd.get('description'),5000),tag:trim(fd.get('tag'),80),time:fd.get('time'),duration:found&&found.entry.source==='focus'?found.entry.duration:fd.get('duration'),updatedAt:Date.now()};
+ commit(()=>{if(found){const updated=normalizeEntry(Object.assign({},found.entry,values),d);removeActivity(found.entry.id);(state.activities[d]||(state.activities[d]=[])).push(updated);}else addActivity(d,values);},found?'Yozuv yangilandi.':'Yana bir kichik g‘alaba saqlandi.',true);closeDialog();beep();
+}
+function deleteEntry(id){
+ const item=findEntry(id);if(!item)return;const e=item.entry;
+ const detail=e.source==='task'?'Bog‘langan reja qayta ochiladi.':e.source==='habit'?'Shu kunning odat natijasi ham nolga tushadi.':e.source==='focus'?'Fokus seansi ham statistikadan olib tashlanadi.':'';
+ confirmDialog('Yozuvni o‘chirasizmi?',esc(e.title)+(detail?'<br><br>'+detail:''),'O‘chirish',()=>{
+  commit(()=>{removeActivity(id);if(e.taskId){const t=findTask(e.taskId);if(t){t.done=false;t.completedAt=0;t.completedEntryId='';}}if(e.habitId){const h=findHabit(e.habitId);if(h)h.logs[item.date]=0;}if(e.sessionId)state.focusSessions=state.focusSessions.filter(f=>f.id!==e.sessionId);},'Yozuv o‘chirildi.',true);
+ });
+}
+let confirmJob=null;
+function confirmDialog(title,message,label,job){confirmJob=job;openDialog(title,'<p class="dialog-intro">'+message+'</p><div class="dialog-actions"><button class="btn" data-action="close-dialog">Bekor qilish</button><button class="btn danger" data-action="confirm">'+label+'</button></div>');}
+function openHabit(id='',template=null){
+ const old=id?findHabit(id):null;if(id&&!old)return;
+ const h=old||Object.assign({title:'',icon:'🌱',tag:'',target:1,unit:'marta',days:[0,1,2,3,4,5,6],createdDate:today(),color:COLORS[0]},template||{});
+ openDialog(old?'Odatni tahrirlash':'Yaxshi odatga joy oching','<p class="dialog-intro">Muntazamlik kattalikdan muhimroq. Juda kichik maqsad ham bo‘ladi.</p><form id="habit-form" data-id="'+esc(id)+'"><div class="form-grid"><label class="field full">Odat nomi<input name="title" value="'+esc(h.title)+'" required maxlength="150" autofocus placeholder="Masalan, 20 bet kitob"></label><label class="field">Belgi (emoji)<input name="icon" value="'+esc(h.icon)+'" maxlength="8"></label>'+categoryField(h.tag)+'<label class="field">Kunlik miqdor<input type="number" name="target" min="1" max="999" value="'+h.target+'" required></label><label class="field">O‘lchov<input name="unit" maxlength="30" value="'+esc(h.unit)+'" placeholder="bet, daqiqa, marta" required></label><div class="field full">Qaysi kunlarda?<div class="day-options">'+WEEK.map((w,i)=>{const n=(i+1)%7;return '<label class="day-option"><input type="checkbox" name="days" value="'+n+'"'+(h.days.includes(n)?' checked':'')+'><span>'+w+'</span></label>';}).join('')+'</div></div><label class="field">Boshlangan sana<input name="createdDate" type="date" min="1900-01-01" max="'+today()+'" value="'+h.createdDate+'" required></label><label class="field">Rang<input type="color" name="color" value="'+h.color+'"></label></div>'+
+ (old?'<p class="form-help">Maqsad yoki hafta kunlarini o‘zgartirish ketma-ketlik hisobiga ta’sir qiladi. Oldingi miqdorlar va faollik yozuvlari saqlanadi.</p>':'')+formEnd('Saqlash',old?'<button class="btn" type="button" data-action="archive-habit" data-id="'+esc(id)+'">'+(old.archived?'Tiklash':'Arxivlash')+'</button>':'')+'</form>');
+}
+function saveHabit(form){
+ const fd=new FormData(form),old=findHabit(form.dataset.id),days=fd.getAll('days').map(Number),start=fd.get('createdDate');
+ if(!trim(fd.get('title'))||!days.length||!validDate(start)||start>today()){formError('Nom, boshlanish sanasi va kamida bir hafta kunini belgilang.');return;}
+ if(old&&Object.keys(old.logs).some(d=>d<start&&old.logs[d]>0)){formError('Boshlanish sanasi avvalgi qaydlardan kech bo‘la olmaydi.');return;}
+ const h=normalizeHabit(Object.assign({},old||{id:uid()},Object.fromEntries(fd),{days,createdDate:start}));
+ commit(()=>{if(old)state.habits[state.habits.indexOf(old)]=h;else state.habits.push(h);},old?'Odat yangilandi.':'Yangi odatga birinchi qadam qo‘yildi.',true);closeDialog();
+}
+function openHabitLog(id,date=today()){
+ const h=findHabit(id);if(!h)return;
+ openDialog('Odat tarixini yangilash','<p class="dialog-intro">'+esc(h.icon+' '+h.title)+' · maqsad '+h.target+' '+esc(h.unit)+'</p><form id="habit-log-form" data-id="'+esc(id)+'"><div class="form-grid"><label class="field">Sana<input type="date" id="habit-log-date" name="date" min="'+h.createdDate+'" max="'+today()+'" value="'+date+'" required></label><label class="field">Bajarilgan miqdor<input type="number" id="habit-log-count" name="count" min="0" max="'+h.target+'" value="'+(h.logs[date]||0)+'" required autofocus></label></div><p class="form-help">Faqat odat rejalashtirilgan kunlarni qayd eting. Maqsadga yetganda faollik tarixiga bitta yozuv qo‘shiladi.</p>'+formEnd()+'</form>');
+}
+function archivedHabits(){
+ const items=state.habits.filter(h=>h.archived);
+ openDialog('Arxivdagi odatlar',items.length?items.map(h=>'<div class="settings-row"><div><strong>'+esc(h.icon+' '+h.title)+'</strong><p>'+esc(h.tag)+'</p></div><button class="btn soft" data-action="archive-habit" data-id="'+esc(h.id)+'">Tiklash</button></div>').join(''):'<p class="dialog-intro">Arxiv bo‘sh. Odatni tahrirlash oynasida arxivlash mumkin.</p>');
+}
+function flushJournal(){
+ clearTimeout(journalTimer);journalTimer=0;const field=$('daily-note');if(!field)return;
+ const d=field.dataset.date,note=String(field.value).slice(0,5000);if(!validDate(d))return;
+ const j=state.journal[d]||{mood:0,note:''};if(j.note===note)return;
+ j.note=note;state.journal[d]=j;undoRecord=null;checkAchievements();saveState();
+ if($('journal-status'))$('journal-status').textContent=storageIssue?'Sessiyada saqlandi. Zaxira oling.':'Saqlandi ✓';
+}
+function setMood(value){flushJournal();commit(()=>{const j=state.journal[today()]||{note:'',mood:0};j.mood=j.mood===value?0:value;state.journal[today()]=j;},'Kayfiyat saqlandi.',false);}
+function openDay(date){
+ if(!validDate(date))return;
+ const list=state.activities[date]||[],j=state.journal[date],tasks=state.tasks.filter(t=>t.date===date);
+ openDialog(formatDate(date,true),' <p class="dialog-intro">'+dayName(date)+' · '+list.length+' ta qayd · '+tasks.filter(t=>t.done).length+' / '+tasks.length+' bajarilgan reja</p>'+
+ (list.length?list.map(e=>entryRow(date,e)).join(''):'<p class="form-help">Bu sana uchun hali faollik qayd etilmagan.</p>')+
+ (j&&(j.note||j.mood)?'<div class="form-help"><strong>'+(j.mood?MOODS[j.mood-1].emoji+' '+MOODS[j.mood-1].label:'Kundalik')+'</strong><p style="white-space:pre-wrap;margin-top:8px">'+esc(j.note)+'</p></div>':'')+
+ '<div class="dialog-actions"><button class="btn" data-action="show-plan-day" data-date="'+date+'">Kun rejalari</button>'+(date<=today()?'<button class="btn primary" data-action="new-entry" data-date="'+date+'">'+icon('plus')+' Qayd qo‘shish</button>':'')+'</div>');
+}
+function openSearch(){openDialog('Makon bo‘ylab qidirish','<label class="field">Reja, odat va bajarilgan ishlar<input id="global-search" type="search" autofocus placeholder="Qidirish uchun yozing…" autocomplete="off"></label><div id="search-results" class="search-results"><p class="form-help">Sarlavha, izoh yoki kategoriya bo‘yicha qidiring.</p></div>');}
+function searchAll(query){
+ const q=trim(query).toLocaleLowerCase(),list=[];
+ if(q){state.tasks.forEach(t=>{if((t.title+' '+t.description+' '+t.tag).toLocaleLowerCase().includes(q))list.push({title:t.title,sub:'Reja · '+formatDate(t.date,true),id:t.id,action:'edit-task'});});state.habits.forEach(h=>{if((h.title+' '+h.tag).toLocaleLowerCase().includes(q))list.push({title:h.title,sub:'Odat'+(h.archived?' · arxivda':''),id:h.id,action:'edit-habit'});});entries().sort((a,b)=>b.date.localeCompare(a.date)).forEach(({date,entry:e})=>{if((e.title+' '+e.description+' '+e.tag).toLocaleLowerCase().includes(q))list.push({title:e.title,sub:'Faollik · '+formatDate(date,true),id:e.id,action:'edit-entry'});});}
+ $('search-results').innerHTML=list.length?'<p class="tiny muted" style="margin-bottom:10px">'+list.length+' ta natija'+(list.length>30?' · dastlabki 30 tasi':'')+'</p>'+list.slice(0,30).map(x=>'<button class="search-result" data-action="'+x.action+'" data-id="'+esc(x.id)+'"><strong>'+esc(x.title)+'</strong><span>'+esc(x.sub)+'</span></button>').join(''):'<p class="form-help">'+(q?'Mos natija topilmadi. Boshqa so‘z bilan sinab ko‘ring.':'Qidirish uchun biror so‘z yozing.')+'</p>';
+}
+/* 13 · Portable backups. Validate first, preview second, mutate only on approval.
+   Old tracker envelopes use PBKDF2/SHA-256 (100,000) + AES-GCM. New exports
+   use 600,000 iterations. Passwords and keys are held in this session only. */
+const MAX_BACKUP=10*1024*1024,NEW_ITERATIONS=600000;
+function backupSnapshot(){
+ const copy=clone(state);copy.exportedAt=new Date().toISOString();
+ if(copy.timer.status==='running'){copy.timer.remaining=timerRemaining();copy.timer.status='paused';copy.timer.endAt=0;}
+ return copy;
+}
+function downloadText(text,name){
+ if(window.DayloomNative&&typeof window.DayloomNative.saveJson==='function'){
+  window.DayloomNative.saveJson(text,name);
+  return;
+ }
+ const blob=new Blob([text],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
+function exportJSON(){flushJournal();downloadText(JSON.stringify(backupSnapshot(),null,2),'dayloom-'+today()+'.json');toast('JSON zaxira tayyor.');}
+function cryptoReady(){if(!globalThis.crypto||!crypto.subtle)throw Error('Bu brauzerda shifrlash mavjud emas. Chrome yoki Safari yangilangan versiyasidan foydalaning; oddiy JSON zaxira hozir ham ishlaydi.');}
+function bytes(value,name){
+ if(Array.isArray(value)){if(value.length>MAX_BACKUP||value.some(n=>!Number.isInteger(n)||n<0||n>255))throw Error(name+' formati noto‘g‘ri.');return new Uint8Array(value);}
+ if(typeof value==='string'&&value.length<=MAX_BACKUP*1.4){try{const s=atob(value),out=new Uint8Array(s.length);for(let i=0;i<s.length;i++)out[i]=s.charCodeAt(i);return out;}catch(e){}}
+ throw Error(name+' formati noto‘g‘ri.');
+}
+function base64(data){const a=new Uint8Array(data);let s='';for(let i=0;i<a.length;i+=32768)s+=String.fromCharCode.apply(null,a.subarray(i,i+32768));return btoa(s);}
+function isEncrypted(x){return x&&typeof x==='object'&&x.salt!=null&&x.iv!=null&&x.data!=null;}
+function envelopeParts(raw){
+ if(!isEncrypted(raw))throw Error('Shifrlangan fayl formati noto‘g‘ri.');
+ if(raw.app&&raw.app!=='dayloom-encrypted')throw Error('Noma’lum shifrlash formati.');
+ if(raw.app==='dayloom-encrypted'&&(raw.version!==1||raw.kdf!=='PBKDF2-SHA256'))throw Error('Shifrlash versiyasi qo‘llab-quvvatlanmaydi.');
+ const salt=bytes(raw.salt,'Salt'),iv=bytes(raw.iv,'IV'),data=bytes(raw.data,'Ma’lumot'),iterations=raw.iterations==null?100000:Number(raw.iterations);
+ if(salt.length!==16||iv.length!==12||data.length<16||!Number.isInteger(iterations)||iterations<100000||iterations>2000000)throw Error('Shifrlash parametrlari noto‘g‘ri.');
+ return {salt,iv,data,iterations};
+}
+async function deriveKey(password,salt,iterations){
+ cryptoReady();const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+ return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function decryptBackup(raw,password){
+ const p=envelopeParts(raw),key=await deriveKey(password,p.salt,p.iterations);let plain;
+ try{plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:p.iv},key,p.data);}catch(e){throw Error('Parol noto‘g‘ri yoki fayl shikastlangan. Ma’lumotlar o‘zgarmadi.');}
+ let object;try{object=JSON.parse(new TextDecoder().decode(plain));}catch(e){throw Error('Ochilgan faylda haqiqiy JSON yo‘q.');}
+ return {state:normalizeState(object),key,salt:p.salt,iterations:p.iterations};
+}
+async function encryptWithKey(data,key,salt,iterations=NEW_ITERATIONS){
+ cryptoReady();const iv=crypto.getRandomValues(new Uint8Array(12)),cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(data)));
+ return JSON.stringify({app:'dayloom-encrypted',version:1,kdf:'PBKDF2-SHA256',iterations,salt:base64(salt),iv:base64(iv),data:base64(cipher)},null,2);
+}
+async function encryptBackup(data,password){
+ const salt=crypto.getRandomValues(new Uint8Array(16)),key=await deriveKey(password,salt,NEW_ITERATIONS);
+ return {text:await encryptWithKey(data,key,salt),key,salt,iterations:NEW_ITERATIONS};
+}
+async function fingerprint(text){cryptoReady();return base64(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)));}
+function askPassword(title,isNew,job,extra=''){
+ cryptoReady();passwordJob=job;
+ openDialog(title,'<p class="dialog-intro">'+(isNew?'Kamida 8 belgili parol tanlang. Uni unutsangiz, parolli nusxani ochib bo‘lmaydi.':'Fayl yaratilgandagi parolni kiriting. Eski Daily Tracker parollari ham ishlaydi.')+'</p>'+extra+
+ '<form id="password-form"><label class="field">Parol<input type="password" name="password" autocomplete="'+(isNew?'new-password':'current-password')+'" required minlength="'+(isNew?8:1)+'" maxlength="1000" autofocus></label>'+
+ (isNew?'<label class="field" style="margin-top:16px">Parolni takrorlang<input type="password" name="confirmation" autocomplete="new-password" required minlength="8" maxlength="1000"></label>':'')+
+ '<p class="tiny muted" style="margin-top:13px">Parol faqat ushbu sessiyada ishlatiladi.</p>'+formEnd(isNew?'Davom etish':'Ochish')+'</form>');
+}
+async function submitPassword(form){
+ const job=passwordJob;if(!job)return;
+ const fd=new FormData(form),pass=String(fd.get('password')||''),confirmation=fd.get('confirmation');
+ if(!pass||(confirmation!==null&&(pass.length<8||pass!==confirmation))){formError('Parollar bir xil va kamida 8 belgili bo‘lishi kerak.');return;}
+ const submit=form.querySelector('[type="submit"]');submit.disabled=true;submit.textContent='Bir oz kuting…';
+ try{await job(pass,()=>passwordJob===job);}catch(e){if(passwordJob===job)formError(e.message||'Amal bajarilmadi.');}
+ finally{if(submit.isConnected){submit.disabled=false;submit.textContent=confirmation===null?'Ochish':'Davom etish';}form.reset();}
+}
+async function readBackupFile(file,handle=null){
+ if(!file||file.size>MAX_BACKUP)throw Error('Zaxira fayli 10 MB dan kichik bo‘lishi kerak.');
+ const text=await file.text();if(!text.trim())throw Error('Fayl bo‘sh. Mavjud ma’lumotlar o‘zgarmadi.');
+ let raw;try{raw=JSON.parse(text);}catch(e){throw Error('Fayl haqiqiy JSON emas. Mavjud ma’lumotlar o‘zgarmadi.');}
+ const hash=handle?await fingerprint(text):'';
+ if(isEncrypted(raw)){
+  envelopeParts(raw);
+  askPassword('Parolli zaxirani ochish',false,async(pass,isCurrent)=>{
+   const result=await decryptBackup(raw,pass);if(!isCurrent())return;
+   importPending={data:result.state,name:file.name,candidate:handle?{handle,key:result.key,salt:result.salt,iterations:result.iterations,fingerprint:hash,saved:0,error:'',rotation:null}:null};
+   passwordJob=null;previewImport();
+  });
+ }else{
+  if(handle)throw Error('Avtomatik zaxira uchun parolli JSON faylni tanlang. Oddiy faylni “Import qilish” orqali ochib, keyin yangi parolli fayl yarating.');
+  importPending={data:normalizeState(raw),name:file.name,candidate:null};previewImport();
+ }
+}
+function previewImport(){
+ if(!importPending)return;
+ const x=importPending,s=x.data,count=Object.values(s.activities).reduce((n,a)=>n+a.length,0),dates=Object.keys(s.activities).filter(d=>s.activities[d].length).sort();
+ openDialog('Importni ko‘rib chiqing','<p class="dialog-intro">'+esc(x.name)+(s.meta.migrated?' · eski Daily Tracker nusxasi':'')+'</p><div class="metrics" style="grid-template-columns:repeat(3,1fr)">'+metric('Yozuvlar',count,'Faollik tarixi','book')+metric('Rejalar',s.tasks.length,'Kunlik vazifalar','plans')+metric('Odatlar',s.habits.length,'Shaxsiy ritm','habits')+'</div>'+
+ (dates.length?'<p class="tiny muted">'+formatDate(dates[0],true)+' — '+formatDate(dates[dates.length-1],true)+'</p>':'')+
+ '<form id="import-form"><label class="import-option"><input type="radio" name="mode" value="merge" checked><span><strong>Birlashtirish</strong><small>Mavjud yozuvlar saqlanadi. Bir xil ID qayta qo‘shilmaydi; sizdagi nusxa ustun turadi.</small></span></label>'+
+ '<label class="import-option"><input type="radio" name="mode" value="replace"><span><strong>To‘liq tiklash</strong><small>Joriy ma’lumotlar shu nusxa bilan almashtiriladi. Oldingi nusxa avval JSON sifatida yuklab olinadi.</small></span></label>'+
+ (x.candidate?'<p class="form-help">Tasdiqlasangiz, <strong>'+esc(x.name)+'</strong> fayli ham ulanadi. Yakuniy birlashtirilgan yoki tiklangan ma’lumot unga parol bilan yoziladi.</p>':'')+
+ '<div class="form-error" id="form-error"></div><div class="dialog-actions"><button class="btn" type="button" data-action="close-dialog">Bekor qilish</button><button class="btn primary" type="submit">Tasdiqlash va import</button></div></form>');
+}
+function mergeState(current,incoming){
+ const merged=clone(current),ids=new Set(Object.values(merged.activities).flat().map(e=>e.id));
+ Object.entries(incoming.activities).forEach(([d,list])=>list.forEach(e=>{if(!ids.has(e.id)){(merged.activities[d]||(merged.activities[d]=[])).push(clone(e));ids.add(e.id);}}));
+ const taskIds=new Set(merged.tasks.map(t=>t.id));incoming.tasks.forEach(t=>{if(!taskIds.has(t.id)){merged.tasks.push(clone(t));taskIds.add(t.id);}});
+ const habits=new Map(merged.habits.map(h=>[h.id,h]));incoming.habits.forEach(h=>{if(habits.has(h.id)){const old=habits.get(h.id);Object.entries(h.logs).forEach(([d,n])=>{if(!(d in old.logs))old.logs[d]=n;});}else{const copy=clone(h);merged.habits.push(copy);habits.set(h.id,copy);}});
+ Object.entries(incoming.journal).forEach(([d,j])=>{if(!merged.journal[d])merged.journal[d]=clone(j);});
+ const sessions=new Set(merged.focusSessions.map(s=>s.id));incoming.focusSessions.forEach(s=>{if(!sessions.has(s.id)){merged.focusSessions.push(clone(s));sessions.add(s.id);}});
+ const achievements=new Set(merged.achievements.map(a=>a.id));incoming.achievements.forEach(a=>{if(!achievements.has(a.id)){merged.achievements.push(clone(a));achievements.add(a.id);}});
+ Object.entries(incoming.tagColors).forEach(([k,v])=>{if(!Object.prototype.hasOwnProperty.call(merged.tagColors,k))Object.defineProperty(merged.tagColors,k,{value:v,enumerable:true,writable:true,configurable:true});});
+ // Reconcile explicit links against the winning records. A repeated import cannot
+ // revive a completion that was undone locally, nor add duplicate linked logs.
+ const linkKeys=new Set(),taskMap=new Map(merged.tasks.map(t=>[t.id,t])),habitMap=new Map(merged.habits.map(h=>[h.id,h]));
+ Object.keys(merged.activities).forEach(d=>{merged.activities[d]=merged.activities[d].filter(e=>{
+  let key='';if(e.source==='task'&&e.taskId){const t=taskMap.get(e.taskId);if(t&&!t.done)return false;key='task:'+e.taskId;}
+  if(e.source==='habit'&&e.habitId){const h=habitMap.get(e.habitId);if(h&&(h.logs[d]||0)<h.target)return false;key='habit:'+e.habitId+':'+d;}
+  if(e.source==='focus'&&e.sessionId)key='focus:'+e.sessionId;
+  if(key&&linkKeys.has(key))return false;if(key)linkKeys.add(key);return true;
+ });});
+ return normalizeState(merged);
+}
+async function applyImport(mode){
+ if(!importPending||!['merge','replace'].includes(mode))return;flushJournal();
+ const pending=importPending,previous=backupSnapshot();
+ if(pending.candidate&&pending.candidate.handle.requestPermission){const permission=await pending.candidate.handle.requestPermission({mode:'readwrite'});if(importPending!==pending)return;if(permission!=='granted'){formError('Faylga yozishga ruxsat berilmadi. Ma’lumotlar o‘zgarmadi.');return;}}
+ if(rawRecovery&&mode!=='replace'){formError('Asl nusxa o‘qilmadi. Uni Sozlamalardan yuklab oling va “To‘liq tiklash”ni tanlang.');return;}
+ const next=mode==='replace'?clone(pending.data):mergeState(state,pending.data);
+ if(mode==='replace'){
+  if($('daily-note'))$('daily-note').remove();
+  downloadText(rawRecovery||JSON.stringify(previous,null,2),'dayloom-before-restore-'+today()+'.json');
+  if(next.timer.status==='running'){next.timer.remaining=Math.max(0,Math.min(next.timer.duration,Math.ceil((next.timer.endAt-Date.now())/1000)));next.timer.status='paused';next.timer.endAt=0;}
+ }
+ // No import silently starts a timer or carries an untrusted future deadline.
+ if(next.timer.status==='paused'&&next.timer.remaining<=0)next.timer=defaultTimer();
+ state=next;state.meta.revision=previous.meta.revision;rawRecovery='';storageConflict=false;knownRaw=readLocal(STORE);undoRecord=null;
+ if(pending.candidate){disconnectFile(false);link=pending.candidate;}else if(mode==='replace'&&link)disconnectFile(false);
+ importPending=null;checkAchievements();saveState();closeDialog();render();toast('Ma’lumotlar '+(mode==='replace'?'tiklandi.':'birlashtirildi.'));
+}
+
+/* 14 · Optional File System Access backup. Writes are serialized and checked
+   against the last successful fingerprint; external edits are never overwritten. */
+function queueLinkedSave(){
+ if(!link||link.error)return;linkDirty=true;clearTimeout(linkSaveTimer);linkSaveTimer=setTimeout(()=>flushLinkedSave(),650);
+}
+async function flushLinkedSave(){
+ if(!link||link.error||linkBusy)return;linkBusy=true;refreshFileStatus();let activeTarget=link;
+ try{
+  while(link&&linkDirty&&!link.error){
+   linkDirty=false;const target=link;activeTarget=target;const file=await target.handle.getFile();if(file.size>MAX_BACKUP)throw Error('Ulangan fayl 10 MB dan katta. Avtomatik zaxira to‘xtadi.');const current=await file.text();
+   if(await fingerprint(current)!==target.fingerprint)throw Error('Fayl tashqarida o‘zgardi. Ulanishni uzib, yangidan ulang. Hech narsa ustiga yozilmadi.');
+   const material=target.rotation||target,content=await encryptWithKey(backupSnapshot(),material.key,material.salt,material.iterations);
+   if(link!==target)return;
+   const latest=await target.handle.getFile();
+   if(await fingerprint(await latest.text())!==target.fingerprint)throw Error('Yozishdan oldin fayl o‘zgardi. Avtomatik zaxira to‘xtatildi.');
+   const writer=await target.handle.createWritable();
+   try{if(link!==target){await writer.abort();return;}await writer.write(content);await writer.close();}catch(e){try{await writer.abort();}catch(ignore){}throw e;}
+   target.fingerprint=await fingerprint(content);target.saved=Date.now();
+   if(target.rotation){target.key=target.rotation.key;target.salt=target.rotation.salt;target.iterations=target.rotation.iterations;target.rotation=null;}
+  }
+ }catch(e){if(link&&link===activeTarget){link.error=e.message||'Faylga yozib bo‘lmadi. Ulanishni qayta tekshiring.';toast(storageIssue?'Avtomatik zaxira to‘xtadi. Hozir JSON zaxira yuklab oling.':'Avtomatik zaxira to‘xtadi. Qurilma nusxasi saqlanmoqda.');}}
+ finally{linkBusy=false;refreshFileStatus();if(linkDirty&&link&&!link.error)queueLinkedSave();}
+}
+function disconnectFile(showToast=true){clearTimeout(linkSaveTimer);linkDirty=false;link=null;refreshFileStatus();if(showToast)toast(storageIssue?'Fayl uzildi. Sessiyani JSON zaxira sifatida yuklab oling.':'Fayl uzildi. Qurilma nusxasi saqlanmoqda.');}
+async function chooseLinkedFile(){
+ if(!window.showOpenFilePicker){toast('Bu brauzerda JSON import va eksportdan foydalaning.');return;}
+ try{const handles=await window.showOpenFilePicker({multiple:false,types:[{description:'Daily Tracker JSON',accept:{'application/json':['.json']}}]});await readBackupFile(await handles[0].getFile(),handles[0]);}catch(e){if(e.name!=='AbortError')toast(e.message||'Faylni ochib bo‘lmadi.');}
+}
+async function newLinkedFile(){
+ if(!window.showSaveFilePicker){toast('Bu brauzerda parolli eksportdan foydalaning.');return;}
+ try{
+  cryptoReady();const handle=await window.showSaveFilePicker({suggestedName:'dayloom-private.json',types:[{description:'Parolli JSON',accept:{'application/json':['.json']}}]});
+  const file=await handle.getFile();if(file.size){await readBackupFile(file,handle);return;}
+  const hash=await fingerprint('');
+  askPassword('Yangi fayl uchun parol',true,async(pass,isCurrent)=>{
+   const result=await encryptBackup(backupSnapshot(),pass);if(!isCurrent())return;
+   disconnectFile(false);link={handle,key:result.key,salt:result.salt,iterations:result.iterations,fingerprint:hash,saved:0,error:'',rotation:null};linkDirty=true;
+   closeDialog();await flushLinkedSave();render();if(link&&!link.error)toast('Parolli fayl ulandi. O‘zgarishlar avtomatik yoziladi.');
+  },'<p class="form-help">'+esc(handle.name)+' fayliga joriy ma’lumotlarning parolli nusxasi yoziladi.</p>');
+ }catch(e){if(e.name!=='AbortError')toast(e.message||'Yangi fayl yaratilmadi.');}
+}
+function changeFilePassword(){
+ if(!link||link.error)return;if(linkBusy){toast('Joriy zaxira yozilishi tugagach qayta urinib ko‘ring.');return;}
+ const target=link;
+ askPassword('Fayl parolini almashtirish',true,async(pass,isCurrent)=>{
+  const salt=crypto.getRandomValues(new Uint8Array(16)),key=await deriveKey(pass,salt,NEW_ITERATIONS);if(!isCurrent()||link!==target)return;
+  if(linkBusy){formError('Zaxira hozir yozilmoqda. Yozish tugagach yana bosing.');return;}
+  target.rotation={key,salt,iterations:NEW_ITERATIONS};linkDirty=true;closeDialog();await flushLinkedSave();
+  if(link===target&&!target.error)toast('Fayl yangi parol bilan shifrlandi.');
+ });
+}
+/* 15 · One delegated event layer. No inline handlers or leaked globals. */
+async function handleAction(button){
+ const action=button.dataset.action,id=button.dataset.id,date=button.dataset.date;
+ if(button.disabled)return;
+ if(action!=='close-dialog')flushJournal();
+ switch(action){
+  case 'navigate':navigate(button.dataset.view);break;
+  case 'theme':state.settings.theme=({system:'light',light:'dark',dark:'system'})[state.settings.theme];saveState();render();toast('Rang rejimi: '+({system:'tizimga mos',light:'yorug‘',dark:'tungi'})[state.settings.theme]);break;
+  case 'search':openSearch();break;
+  case 'new-task':openTask('',date||(view==='plans'?selectedDate:today()));break;
+  case 'edit-task':openTask(id);break;
+  case 'toggle-task':toggleTask(id);break;
+  case 'delete-task':{const task=findTask(id);if(task)confirmDialog('Rejani o‘chirasizmi?',esc(task.title)+'<br><br>Bajarilgan ish tarixi saqlanadi. Takroriy rejaning boshqa sanalari o‘zgarmaydi.','O‘chirish',()=>commit(()=>{state.tasks=state.tasks.filter(t=>t.id!==id);entries().forEach(({entry:e})=>{if(e.taskId===id){e.taskId='';e.source='manual';}});},'Reja o‘chirildi.',true));break;}
+  case 'task-filter':taskFilter=button.dataset.value;render();break;
+  case 'move-overdue':moveOverdue();break;
+  case 'planner-mode':plannerMode=button.dataset.mode;render();break;
+  case 'planner-today':selectedDate=today();render();break;
+  case 'select-date':selectedDate=date;plannerMode='day';render();break;
+  case 'period':{const delta=Number(button.dataset.delta);const next=plannerMode==='month'?addMonths(selectedDate,delta):addDays(selectedDate,delta*7);if(validDate(next))selectedDate=next;render();break;}
+  case 'show-plan-day':selectedDate=date;plannerMode='day';closeDialog();navigate('plans');break;
+  case 'new-entry':openEntry('',date||today());break;
+  case 'edit-entry':openEntry(id);break;
+  case 'delete-entry':deleteEntry(id);break;
+  case 'new-habit':openHabit();break;
+  case 'edit-habit':openHabit(id);break;
+  case 'habit-template':openHabit('',HABIT_TEMPLATES[Number(button.dataset.index)]);break;
+  case 'habit-plus':updateHabit(id,1);break;
+  case 'habit-minus':updateHabit(id,-1);break;
+  case 'habit-log':openHabitLog(id);break;
+  case 'archive-habit':{const h=findHabit(id);if(h){commit(()=>{h.archived=!h.archived;},h.archived?'Odat tiklandi.':'Odat arxivlandi. Oldingi tarix saqlanadi.',true);closeDialog();}break;}
+  case 'archived-habits':archivedHabits();break;
+  case 'mood':setMood(Number(button.dataset.mood));break;
+  case 'year':shownYear=clamp(shownYear+Number(button.dataset.delta),1900,2200);render();break;
+  case 'day-detail':openDay(date);break;
+  case 'history-page':historyFilter.page+=Number(button.dataset.delta);renderHistory();break;
+  case 'timer-toggle':toggleTimer();break;
+  case 'timer-mode':setTimerMode(button.dataset.mode);break;
+  case 'timer-finish':completeTimer(true);break;
+  case 'timer-discard':if(['running','paused'].includes(state.timer.status))confirmDialog('Seansni bekor qilasizmi?','Bu seans statistikaga yozilmaydi. Ishlangan vaqtni saqlash uchun “Hozirgacha ishlangan vaqtni saqlash” tugmasini bosing.','Bekor qilish',discardTimer);else discardTimer();break;
+  case 'close-dialog':flushJournal();closeDialog();importPending=null;confirmJob=null;break;
+  case 'confirm':{const job=confirmJob;confirmJob=null;closeDialog();if(job)job();break;}
+  case 'undo':undoLast();break;
+  case 'export':exportJSON();break;
+  case 'export-recovery':if(rawRecovery)downloadText(rawRecovery,'dayloom-original-recovery-'+today()+'.json');break;
+  case 'import':$('import-file').value='';$('import-file').click();break;
+  case 'encrypted-export':askPassword('Parolli zaxira nusxa',true,async(pass,isCurrent)=>{const result=await encryptBackup(backupSnapshot(),pass);if(!isCurrent())return;downloadText(result.text,'dayloom-private-'+today()+'.json');closeDialog();toast('Parolli zaxira tayyor. Parolni xavfsiz joyda saqlang.');});break;
+  case 'file-open':await chooseLinkedFile();break;
+  case 'file-new':await newLinkedFile();break;
+  case 'file-save':flushJournal();if(link&&link.error){toast('Faylni uzib, qayta ulang. Qurilma nusxasi saqlangan.');break;}linkDirty=true;await flushLinkedSave();if(link&&!link.error)toast('Faylga yozildi.');break;
+  case 'file-disconnect':disconnectFile();break;
+  case 'file-password':changeFilePassword();break;
+  case 'reload-data':confirmDialog('Yangi nusxani yuklaysizmi?','Bu sessiyadagi saqlanmagan o‘zgarishlar almashtiriladi. Kerak bo‘lsa, avval “Zaxira olish” orqali eksport qiling.','Yuklash',()=>{try{const raw=localStorage.getItem(STORE),next=raw?normalizeState(JSON.parse(raw)):defaultState();state=next;knownRaw=raw;storageConflict=false;storageIssue='';rawRecovery='';disconnectFile(false);undoRecord=null;if($('daily-note'))$('daily-note').remove();render();toast('Yangi nusxa yuklandi.');}catch(e){toast('Saqlangan nusxani o‘qib bo‘lmadi.');}});break;
+  case 'persist':{let granted=false;try{granted=Boolean(navigator.storage&&navigator.storage.persist&&await navigator.storage.persist());}catch(e){}const message=granted?'Brauzer doimiy saqlashga ruxsat berdi. Zaxira olish baribir foydali.':'Bu brauzer doimiy saqlashni kafolatlamaydi. JSON zaxira olib turing.';if($('persistence-status'))$('persistence-status').textContent=message;toast(message);break;}
+  case 'install':if(installPrompt){const prompt=installPrompt;installPrompt=null;await prompt.prompt();render();}break;
+ }
+}
+document.addEventListener('click',e=>{
+ const button=e.target.closest('[data-action]');if(!button)return;
+ handleAction(button).catch(error=>{toast(error.message||'Amal bajarilmadi. Qayta urinib ko‘ring.');});
+});
+document.addEventListener('submit',async e=>{
+ const form=e.target;if(!form.id)return;e.preventDefault();
+ try{
+  if(form.id==='task-form')saveTask(form);
+  else if(form.id==='entry-form')saveEntry(form);
+  else if(form.id==='habit-form')saveHabit(form);
+  else if(form.id==='habit-log-form'){
+   const fd=new FormData(form),h=findHabit(form.dataset.id),date=fd.get('date'),count=Number(fd.get('count'));
+   if(!h||!validDate(date)||date>today()||date<h.createdDate||!h.days.includes(dateFrom(date).getDay())||!Number.isInteger(count)||count<0||count>h.target){formError('Odat rejalashtirilgan sana va to‘g‘ri miqdorni kiriting.');return;}
+   updateHabit(h.id,count-(h.logs[date]||0),date);closeDialog();
+  }else if(form.id==='quick-task-form'){
+   flushJournal();const fd=new FormData(form),title=trim(fd.get('title'),300);if(!title)return;
+   commit(()=>state.tasks.push(normalizeTask({id:uid(),title,date:today(),priority:'medium'},today())),'Reja qo‘shildi.',true);
+   if($('quick-task-title'))$('quick-task-title').focus();
+  }else if(form.id==='settings-form'){
+   const fd=new FormData(form),values=Object.fromEntries(fd);
+   commit(()=>{state.settings=normalizeState({app:'dayloom',version:2,settings:Object.assign({},state.settings,values,{sound:fd.has('sound'),reduceMotion:fd.has('reduceMotion')})}).settings;if(state.timer.status==='idle'){state.timer.duration=timerModeMinutes(state.timer.mode)*60;state.timer.remaining=state.timer.duration;}},'Sozlamalar saqlandi.');
+  }else if(form.id==='password-form')await submitPassword(form);
+  else if(form.id==='import-form')await applyImport(new FormData(form).get('mode'));
+ }catch(error){formError(error.message||'Ma’lumotlarni tekshiring.');}
+});
+document.addEventListener('input',e=>{
+ const target=e.target;
+ if(target.id==='daily-note'){clearTimeout(journalTimer);if($('journal-status'))$('journal-status').textContent='Yozilmoqda…';journalTimer=setTimeout(flushJournal,450);}
+ if(target.id==='task-search'){taskQuery=target.value;renderPlannerResults();}
+ if(target.id==='global-search')searchAll(target.value);
+ if(target.id==='history-search'){historyFilter.query=target.value;historyFilter.page=0;renderHistory();}
+});
+document.addEventListener('change',async e=>{
+ const target=e.target;
+ try{
+  if(target.id==='task-category'){taskTag=target.value;renderPlannerResults();}
+  if(target.id==='task-state-filter'){taskFilter=target.value;renderPlannerResults();}
+  if(['history-category','history-from','history-to'].includes(target.id)){historyFilter[({'history-category':'tag','history-from':'from','history-to':'to'})[target.id]]=target.value;historyFilter.page=0;renderHistory();}
+  if(target.id==='history-jump'&&validDate(target.value))openDay(target.value);
+  if(target.id==='stats-month'&&validDate(target.value+'-01')){statsMonth=target.value;render();}
+  if(target.id==='focus-task'&&!['running','paused'].includes(state.timer.status)){state.timer.taskId=target.value;saveState();}
+  if(target.id==='habit-log-date'){const form=$('habit-log-form'),h=form&&findHabit(form.dataset.id);if(h&&$('habit-log-count'))$('habit-log-count').value=h.logs[target.value]||0;}
+  if(target.dataset.colorTag!=null){Object.defineProperty(state.tagColors,target.dataset.colorTag,{value:safeColor(target.value)||COLORS[0],enumerable:true,writable:true,configurable:true});saveState();}
+  if(target.id==='import-file'&&target.files&&target.files[0])await readBackupFile(target.files[0]);
+ }catch(error){toast(error.message||'Faylni o‘qib bo‘lmadi.');}
+});
+document.addEventListener('keydown',e=>{
+ if(e.altKey||e.ctrlKey||e.metaKey||e.isComposing)return;
+ const target=e.target;
+ if(target.dataset&&target.dataset.heatIndex!=null&&['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key)){
+  e.preventDefault();const cells=Array.from(document.querySelectorAll('[data-heat-index]')),index=cells.indexOf(target),delta=({ArrowLeft:-7,ArrowRight:7,ArrowUp:-1,ArrowDown:1})[e.key];
+  let next=e.key==='Home'?cells.findIndex(x=>!x.disabled):e.key==='End'?cells.map(x=>x.disabled).lastIndexOf(false):index+delta;
+  const cell=cells[next];if(cell&&!cell.disabled){target.tabIndex=-1;cell.tabIndex=0;cell.focus();}return;
+ }
+ if($('dialog').open||target.closest('input,textarea,select,[contenteditable="true"]'))return;
+ if(e.key==='/'){e.preventDefault();openSearch();}
+ else if(e.key.toLowerCase()==='n'){e.preventDefault();openTask('',view==='plans'?selectedDate:today());}
+ else if(e.key.toLowerCase()==='a'){e.preventDefault();openEntry();}
+ else if(e.key.toLowerCase()==='f'){e.preventDefault();navigate('focus');}
+ else if(e.key===' '&&view==='focus'&&!target.closest('button,a')){e.preventDefault();toggleTimer();}
+});
+let draggedTask='';
+document.addEventListener('dragstart',e=>{const row=e.target.closest('[data-task-id]');if(!row||row.getAttribute('draggable')!=='true')return;draggedTask=row.dataset.taskId;e.dataTransfer.setData('text/plain',draggedTask);e.dataTransfer.effectAllowed='move';row.classList.add('dragging');});
+document.addEventListener('dragover',e=>{const drop=e.target.closest('[data-drop-date]');if(draggedTask&&drop){e.preventDefault();e.dataTransfer.dropEffect='move';}});
+document.addEventListener('drop',e=>{const drop=e.target.closest('[data-drop-date]'),t=findTask(draggedTask);if(!drop||!t||!validDate(drop.dataset.dropDate))return;e.preventDefault();const date=drop.dataset.dropDate;draggedTask='';if(t.date!==date)commit(()=>{t.date=date;t.updatedAt=Date.now();},'Reja '+formatDate(date)+' sanasiga ko‘chirildi.',true);});
+document.addEventListener('dragend',()=>{draggedTask='';document.querySelectorAll('.dragging').forEach(el=>el.classList.remove('dragging'));});
+$('dialog').addEventListener('cancel',()=>{passwordJob=null;confirmJob=null;importPending=null;});
+$('dialog').addEventListener('close',()=>{passwordJob=null;});
+window.addEventListener('storage',e=>{
+ if((e.key===STORE&&e.newValue!==knownRaw)||e.key===null){storageConflict=true;storageIssue='Boshqa oynada ma’lumotlar o‘zgardi. Bu sessiyani eksport qilib, yangi nusxani yuklashingiz mumkin.';disconnectFile(false);updateStorage();}
+});
+window.addEventListener('beforeunload',e=>{flushJournal();if(storageIssue||rawRecovery){e.preventDefault();e.returnValue='';}});
+window.addEventListener('pagehide',()=>{flushJournal();if(linkDirty)flushLinkedSave();});
+window.addEventListener('dayloom-native-pause',flushJournal);
+window.addEventListener('focus',tick);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')tick();else flushJournal();});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;if(view==='settings')render();});
+window.addEventListener('appinstalled',()=>{installPrompt=null;toast('Dayloom o‘rnatildi.');});
+
+/* 16 · Small optional enhancements. Core functionality has no network dependency. */
+function beep(){
+ if(!state.settings.sound)return;
+ try{
+  const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;
+  audioContext=audioContext||new Audio();if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+  const oscillator=audioContext.createOscillator(),gain=audioContext.createGain(),at=audioContext.currentTime;
+  oscillator.type='sine';oscillator.frequency.setValueAtTime(660,at);oscillator.frequency.exponentialRampToValueAtTime(880,at+.12);gain.gain.setValueAtTime(.0001,at);gain.gain.exponentialRampToValueAtTime(.055,at+.025);gain.gain.exponentialRampToValueAtTime(.0001,at+.24);oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(at);oscillator.stop(at+.25);
+ }catch(e){}
+}
+function loadFonts(){if(window.DayloomNative||navigator.onLine===false)return;const link=document.createElement('link');link.rel='stylesheet';link.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap';document.head.appendChild(link);}
+function setupPWA(){
+ if(window.DayloomNative)return;
+ if(!/^https?:$/.test(location.protocol))return;
+ const manifest=document.createElement('link');manifest.rel='manifest';manifest.href='./manifest.json';document.head.appendChild(manifest);
+ const favicon=document.createElement('link');favicon.rel='icon';favicon.href='./icon.svg';document.head.appendChild(favicon);
+ if('serviceWorker' in navigator)navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+}
+// BOOT: plain script works from file://. Never overwrite an unreadable copy.
+applyTheme();render();if(!rawRecovery&&!storageConflict)saveState();loadFonts();setupPWA();
+timerInterval=setInterval(tick,500);tick();
+if(state.meta.migrated&&!readLocal('dayloom_migration_noticed')){toast('Eski ma’lumotlar ko‘chirildi. Asl nusxa saqlab qolindi.');try{localStorage.setItem('dayloom_migration_noticed','true');}catch(e){}}
+})();
+</script>
+</body>
+</html>
